@@ -5,11 +5,17 @@
 ## Build Setup
 
 ``` bash
+# install vue-cli
+If vue-cli is not installed, please install it with npm install -g vue-cli
+
 # install dependencies
 $ npm install # Or yarn install
 
 # serve with hot reload at localhost:3000
 $ npm run dev
+
+
+
 
 # build for production and launch server
 $ npm run build
