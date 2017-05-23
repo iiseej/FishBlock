@@ -1,5 +1,6 @@
 <template lang="html">
     <div id="nav-bar">
+     <div id="nav-bar-ajust">
       <div id="nav-bar-middle">
         <img src="~assets/profilPicture.jpg" alt="Profil Picture" class="rounded-picture" />
         <ul>
@@ -12,6 +13,7 @@
           </li>
 
         </ul>
+      </div>
       </div>
       <div id="nav-bar-bottom">
        <img src="~assets/klausLogo.png" alt="Klaus Logo" class="logo"/>
@@ -191,9 +193,13 @@ h1{
   background-position: -20px -80px;
 }
 
+#nav-bar-ajust {
+  margin-bottom: 150px;  
+}  
+  
 #nav-bar-middle {
-  margin-bottom: auto;
-  margin-top: auto;
+  margin-bottom: 50%;
+  margin-top: 50%;
 }
 
 #nav-bar-bottom {
@@ -219,12 +225,14 @@ h1{
   height: auto;
   margin: auto;
   display: block;
+  margin-bottom: 20px;
 }
 
 #night-mode {
   font-size: 12px;
   font-weight: 400;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 #night-mode-on {
