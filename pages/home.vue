@@ -2,14 +2,16 @@
   <div class="container">
     <Affix/>
     <div class="home-content">
+      <Searchbar/>
       <h1>{{msg}}</h1>
     </div>
-</div>
+  </div>
 
 </template>
 
 <script>
 import Affix from '~components/Affix.vue'
+import Searchbar from '~components/Searchbar.vue'
 export default {
   data () {
     return {
@@ -17,7 +19,8 @@ export default {
     }
   },
   components: {
-    Affix
+    Affix,
+    Searchbar
   }
 
 }
@@ -33,6 +36,10 @@ export default {
   flex: 1 1 auto;
   background-color: #262835;
   height: 2000px;
-  margin-left: 220px
+  margin-left: 220px;
+}
+
+.search {
+  display: inline-block;
 }
 </style>
