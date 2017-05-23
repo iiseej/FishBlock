@@ -4,9 +4,15 @@
 
 ## Build Setup
 
+
+
 ``` bash
 
-#Just a try for github
+<<<<<<< HEAD
+#test
+=======
+#Just a try for github +1
+>>>>>>> master
 
 # install vue-cli
 If vue-cli is not installed, please install it with npm install -g vue-cli
