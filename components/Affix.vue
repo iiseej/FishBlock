@@ -3,12 +3,11 @@
       <div id="nav-bar-middle">
         <img src="~assets/profilPicture.jpg" alt="Profil Picture" class="rounded-picture" />
         <ul>
-          <li v-for="item in menu" :class="'nav-bar-selected'">
+          <li   v-for="(item, index) in menu" @mouseover.stop="changePath(index)" @mouseleave.stop="changePathBack(index)":class="'nav-bar-selected'" >
             <div class="nav-bar-element">
-              <img style="height:20px;width:auto;" :src="'/orangeIcons/' + item + 'Icon.png'" alt="" @mouseover="changePath">
-            <nuxt-link :to="'/'+item"><p>
-              <p class="nav-bar-text">{{item}}</p></nuxt-link>
-
+              <img  style="height:20px;width:auto;" :src="item.path + item.name + 'Icon.png'" alt="">
+            <nuxt-link :to="'/'+item.name"><p>
+              <p class="nav-bar-text">{{item.name}}</p></nuxt-link>
           </div>
           </li>
 
@@ -30,13 +29,35 @@
 export default {
   data () {
     return {
-      menu: ['Home', 'Profil', 'Shows', 'Messages', 'Settings'],
-      path: ''
+      menu: [{
+        name: 'Home',
+        path: '/orangeIcons/'
+      },
+      {
+        name: 'Profil',
+        path: '/orangeIcons/'
+      },
+      {
+        name: 'Shows',
+        path: '/orangeIcons/'
+      },
+      {
+        name: 'Messages',
+        path: '/orangeIcons/'
+      },
+      {
+        name: 'Settings',
+        path: '/orangeIcons/'
+      }
+      ]
     }
   },
   methods: {
-    changePath: function () {
-
+    changePath: function (index) {
+      this.menu[index].path = '/blackIcons/'
+    },
+    changePathBack: function (index) {
+      this.menu[index].path = '/orangeIcons/'
     }
   }
 }
