@@ -5,7 +5,7 @@
         <ul>
           <li v-for="item in menu" :class="'nav-bar-selected'">
             <div class="nav-bar-element">
-              <img style="height:20px;width:auto;" :src="'/' + item + 'Icon.png'" alt="" @mouseover="changePath">
+              <img style="height:20px;width:auto;" :src="'/orangeIcons/' + item + 'Icon.png'" alt="" @mouseover="changePath">
             <nuxt-link :to="'/'+item"><p>
               <p class="nav-bar-text">{{item}}</p></nuxt-link>
 

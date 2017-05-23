@@ -4,7 +4,7 @@
     <Affix/>
   <div class="content">
 
-    <img  v-on:mouseover="seen = !seen" style="height:600px;width:auto;" :src="'https://image.tmdb.org/t/p/w500/'+movie.poster_path" alt="">
+    <img  @click="seen = !seen" style="height:600px;width:auto;" :src="'https://image.tmdb.org/t/p/w500/'+movie.poster_path" alt="">
     <p><strong>{{movie.original_name}}</strong></p>
     <ul>
       <li v-for="i in movie.number_of_seasons">
