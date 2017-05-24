@@ -5,7 +5,7 @@
   <div class="content">
    <div class="gradient">
     <div class="backdrop">
-     <img  @click="seen = !seen" style="width:100%; position: relative;
+     <img   style="width:100%; position: relative;
     top: -50px; z-index: -10;" :src="'https://image.tmdb.org/t/p/original/'+movie.backdrop_path" alt="">
     <div class="tvshow-title">
     <p style="font-size: 50px; margin-left: 25px;"><strong>{{movie.original_name}}</strong></p>
@@ -18,18 +18,18 @@
     </div>
     </div>
     <div class="tvshow-synopsis-cast">
-       <div class="tvshow-synopsis">
-       <div id="about"><img src="~assets/about.png" style="width: 8px; margin-right: 5px;"/> About the show</div>
-       <p style="font-size: 20px;">254 Followers</p>
-       <p style="font-size: 20px; margin-bottom: 20px;">26 Critics</p>
-        <p class="text-light" v-if="seen">{{movie.overview}}</p>
+       <div   class="tvshow-synopsis">
+       <div  id="about"><img    src="~assets/about.png" style="width: 8px; margin-right: 5px;"/> About the show</div>
+       <p  style="font-size: 20px;">254 Followers</p>
+       <p  style="font-size: 20px; margin-bottom: 20px;">26 Critics</p>
+        <p  v-if="seen" class="text-light" >{{overview}}</p>
         </div>
         <div class="tvshow-cast">
-                 <div id="cast">The cast <img src="~assets/cast.png" style="width: 10px; margin-left: 5px;"/></div>
-         <div id="actor-photo-container">
-          <li v-for="actor in cast" id="actor-photo"><img style="width: 130px; height: auto;" :src="'https://image.tmdb.org/t/p/original/'+actor.profile_path"/></li>
-                    <div id="actor-name-container">
-          <li v-for="actor in cast" id="actor-name" style="width: 130px; text-align: center;">{{actor.name}}</li></div></div>
+                 <div id="casting">The cast <img src="~assets/cast.png" style="width: 10px; margin-left: 5px;"/></div>
+         <div  @click="seen = !seen" id="actor-photo-container">
+          <li  v-for="actor in cast" class="actor-photo"><img  style="width: 130px; height: auto;" :src="'https://image.tmdb.org/t/p/original/'+actor.profile_path"/></li>
+                    <div class="actor-name-container">
+          <li v-for="actor in cast" class="actor-name" style="width: 130px; text-align: center;">{{actor.name}}</li></div></div>
 
         </div>
         </div>
@@ -48,10 +48,12 @@ import Affix from '~components/Affix.vue'
 
 export default {
   data: () => ({
+    apiKey: '028097eda8e5dd43094c8fcbaf15a506',
     movie: {},
     errors: [],
     cast: [],
-    seen: true
+    seen: true,
+    overview: ''
   }),
   components: {
     Affix
@@ -59,48 +61,42 @@ export default {
 
   // Fetches posts when the component is created.
   created () {
-    console.log(this.$route.params.id)
-    axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '?api_key=028097eda8e5dd43094c8fcbaf15a506&language=en-US')
+    axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '?api_key=' + this.apiKey + '&language=en-US')
     .then(response => {
       // JSON responses are automatically parsed.
 
       this.movie = response.data
       this.movie.first_air_date = response.data.first_air_date.substring(0, 4)
+      this.overview = response.data.overview
     })
     .catch(e => {
       this.errors.push(e)
     })
-    axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '/credits?api_key=028097eda8e5dd43094c8fcbaf15a506&language=en-US')
+    axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '/credits?api_key=' + this.apiKey + '&language=en-US')
     .then(response => {
       // JSON responses are automatically parsed.
-
       this.cast = response.data.cast
-      console.log(this.cast)
     })
     .catch(e => {
       this.errors.push(e)
     })
-
-    // async / await version (created() becomes async created())
-    //
-    // try {
-    //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
-    //   this.posts = response.data
-    // } catch (e) {
-    //   this.errors.push(e)
-    // }
-  },
-  mount () {
-    console.log(this.$route.params.id)
-    axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '?api_key=028097eda8e5dd43094c8fcbaf15a506&language=en-US')
+    axios.get('https://api.themoviedb.org/3/person/122616?api_key=' + this.apiKey + '&language=en-U')
     .then(response => {
       // JSON responses are automatically parsed.
-      console.log(response.data)
-      this.movie = response.data
+      console.log(this.cast[0].id)
     })
     .catch(e => {
       this.errors.push(e)
     })
+  }
+    // async / await version (created() becomes async created())
+    //
+    // try {
+    //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
+    //   this.posts = response.data
+    // } catch (e) {
+    //   this.errors.push(e)
+    // }
 
     // async / await version (created() becomes async created())
     //
@@ -110,9 +106,8 @@ export default {
     // } catch (e) {
     //   this.errors.push(e)
     // }
-  }
-
 }
+
 </script>
 <style media="screen">
 .container {
@@ -129,7 +124,7 @@ export default {
   justify-content: center;
   position: relative;
 }
-  
+
 .backdrop {
   width: 100%;
   height: 200px;
@@ -165,7 +160,7 @@ background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.8) 0%, rgba(255,
   padding-right: 10%;
   display: inline-block;
 }
-  
+
 #about {
   color: white;
   font-size: 12px;
@@ -174,8 +169,8 @@ background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.8) 0%, rgba(255,
   margin-left: -15px;
   margin-bottom: 20px;
 }
-  
-#cast {
+
+#casting {
   color: white;
   font-size: 12px;
   font-weight: 800;
@@ -183,16 +178,16 @@ background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.8) 0%, rgba(255,
   margin-right: -15px;
   margin-bottom: 20px;
   text-align: right;
-}  
-  
+}
+
 .tvshow-cast {
   display: inline-block;
   width: 60%;
   padding-left: 20px;
   vertical-align: top;
 }
-  
-#actor-name {
+
+.actor-name {
   display: inline-block;
   padding-left: 0px;
   color: white;
@@ -200,22 +195,22 @@ background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.8) 0%, rgba(255,
   font-size: 11px;
 }
 
-#actor-photo {
+.actor-photo {
   display: inline-block;
   padding-left: 0px;
 }
-  
+
 #actor-photo-container {
   overflow-x: scroll;
   white-space: nowrap;
   max-width: 800px;
   margin-right: 0px;
 }
-  
+
 ::-webkit-scrollbar {
     width: 12px;
-}  
-  
+}
+
 ::-webkit-scrollbar-track {
     background: #161C28;
 }
@@ -225,7 +220,7 @@ background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.8) 0%, rgba(255,
   -webkit-border-radius: 10px;
   border-radius: 10px;
 }
-  
+
 .text-light {
   font-weight: 400;
 }
