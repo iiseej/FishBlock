@@ -4,7 +4,7 @@
     <Affix/>
     <div class="content">
 
-      <!-- Top banner of the tvshow --> 
+      <!-- Top banner of the tvshow -->
       <div class="backdrop-gradient">
         <div class="backdrop">
           <img id="tvshow-backdrop" :src="'https://image.tmdb.org/t/p/original/'+movie.backdrop_path" alt="banner">
@@ -21,7 +21,7 @@
         </div>
       </div>
 
-      <!-- Details of tvshow and cast --> 
+      <!-- Details of tvshow and cast -->
       <div class="tvshow-synopsis-cast">
         <div class="tvshow-synopsis">
           <div id="tvshow-about-text">
@@ -30,13 +30,16 @@
           <p id="tvshow-followers">254 Followers</p>
           <p id="tvshow-critics">26 Critics</p>
           <p v-if="seen" class="text-light" >{{overview}}</p>
+          <p v-if="!seen" class="text-light">{{actorName}}</p>
+          <p v-if="!seen">{{actorBio}}</p>
+
         </div>
         <div class="tvshow-cast">
           <div id="tvshow-cast-text">
             The cast <img src="~assets/cast.png" id="tvshow-cast-icon"/>
           </div>
-          <div @click="seen = !seen" id="tvshow-actor-photo-container">
-            <li v-for="actor in cast" class="tvshow-actor-photo"><img id="tvshow-cast-poster" :src="'https://image.tmdb.org/t/p/original/'+actor.profile_path"/></li>
+          <div  id="tvshow-actor-photo-container">
+            <li v-for="actor in cast" class="tvshow-actor-photo"><img @mouseover="setBio(actor), seen=false" @mouseleave="seen = true" id="tvshow-cast-poster" :src="'https://image.tmdb.org/t/p/original/'+actor.profile_path"/></li>
             <div>
               <li v-for="actor in cast" class="tvshow-actor-name">{{actor.name}}</li>
             </div>
@@ -44,15 +47,15 @@
         </div>
       </div>
 
-      <!-- Details of episodes and seasons --> 
+      <!-- Details of episodes and seasons -->
       <div class="seasons-gradient">
         <div class="tvshow-seasons-episodes">
           <ul>
-            <li id="tvshow-season-list" v-for="i in movie.number_of_seasons">
-              <div class="tvshow-season-img"><p id="tvshow-season-text">season {{i}} {{seasonEpisodes.length}} episodes</p><img :src="'https://image.tmdb.org/t/p/original/' + season.poster_path" id="tvshow-season-poster"/></div>
+            <li @click="searchEpisodes(i)" id="tvshow-season-list" v-for="i in movie.number_of_seasons">
+              <div class="tvshow-season-img"><p id="tvshow-season-text">season {{i}} {{seasonEpisodesNumber}} episodes</p><img  :src="seasonPoster" id="tvshow-season-poster"/></div>
               <ul>
                 <div id="tvshow-episode-list">
-                  <li v-for="episode in seasonEpisodes" class="tvshow-episode-number"><p>0</p></li>
+                  <li @click="setOverviewM(episode); saw = true"  v-for="episode in seasonEpisodes" class="tvshow-episode-number"><p>{{episode.episode_number}}</p></li>
                 </div>
               </ul>
             </li>
@@ -60,20 +63,18 @@
         </div>
       </div>
       <div class="tvshow-episode-details">
-      <ul>
-        <li v-for="episode in seasonEpisodes" class="tvshow-episode-content">
+        <div class="tvshow-episode-content">
           <div id="tvshow-episode-img">
-            <a href="route"><img src="~assets/SawButton.png" id="tvshow-saw-btn"/></a>
-            <img id="tvshow-episode-poster" :src="'https://image.tmdb.org/t/p/original/' + episode.still_path"/> 
+            <a href="route"><img v-if="saw" src="~assets/SawButton.png" id="tvshow-saw-btn"/></a>
+            <img id="tvshow-episode-poster" :src="episodePoster"/>
           </div>
           <div id="tvshow-episode-text">
-            <p id="tvshow-episode-title">{{episode.name}}</p>
-            <p id="tvshow-episode-air-date">Release date {{episode.air_date}}</p>
-            <p id="tvshow-episode-run-time">{{movie.episode_run_time[0]}} min</p>
-            <p id="tvshow-episode-overview">{{episode.overview}}</p>
+            <p id="tvshow-episode-title">{{episodeName}}</p>
+            <p v-if="saw" id="tvshow-episode-air-date">Release date {{episodeReleasedDate}}</p>
+            <p v-if="saw" id="tvshow-episode-run-time">{{movie.episode_run_time[0]}} min</p>
+            <p id="tvshow-episode-overview">{{episodeOverview}}</p>
           </div>
-        </li>
-      </ul>
+        </div>
       </div>
 
     </div>
@@ -81,7 +82,7 @@
 </template>
 
 
-<!-- Scripts --> 
+<!-- Scripts -->
 <script>
 import axios from 'axios'
 import Affix from '~components/Affix.vue'
@@ -93,10 +94,54 @@ export default {
     errors: [],
     cast: [],
     seen: true,
+    saw: false,
     overview: '',
+    episodeOverview: '',
+    episodePoster: '',
+    episodeName: '',
+    episodeReleasedDate: '',
+    episodeRunTime: '',
     seasonEpisodes: [],
-    season: {}
+    season: {},
+    showUl: false,
+    showOverview: false,
+    actorName: '',
+    actorBio: '',
+    seasonPoster: '',
+    seasonEpisodesNumber: 0
   }),
+  methods: {
+    setOverviewM: function (episode) {
+      this.episodeOverview = episode.overview
+      this.episodePoster = 'https://image.tmdb.org/t/p/original/' + episode.still_path
+      this.episodeName = episode.name
+      this.episodeReleasedDate = episode.air_date
+    },
+    setBio: function (actor) {
+      axios.get('https://api.themoviedb.org/3/person/' + actor.id + '?api_key=' + this.apiKey + '&language=en-US')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        console.log(response.data)
+        this.actorName = response.data.name
+        this.actorBio = response.data.biography
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    },
+    searchEpisodes: function (i) {
+      axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '/season/' + i + '?api_key=' + this.apiKey + '&language=en-US')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        console.log(response.data)
+        this.seasonEpisodesNumber = response.data.episodes.length
+        console.log(this.seasonEpisodesNumber)
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    }
+  },
   components: {
     Affix
   },
@@ -130,8 +175,6 @@ export default {
       // JSON responses are automatically parsed.
       this.seasonEpisodes = response.data.episodes
       this.season = response.data
-      console.log(this.seasonEpisodes)
-      console.log(this.season)
     })
     .catch(e => {
       this.errors.push(e)
@@ -140,7 +183,6 @@ export default {
     axios.get('https://api.themoviedb.org/3/person/122616?api_key=' + this.apiKey + '&language=en-U')
     .then(response => {
       // JSON responses are automatically parsed.
-      console.log(this.cast[0].id)
     })
     .catch(e => {
       this.errors.push(e)
@@ -166,7 +208,7 @@ export default {
 }
 </script>
 
-<!-- CSS in order of apparition --> 
+<!-- CSS in order of apparition -->
 <style media="screen">
   .container {
     display: flex;
@@ -187,7 +229,7 @@ export default {
   .backdrop-gradient {
     background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.8) 0%, rgba(255, 255, 255, 0) 100%);
     position: relative;
-  }  
+  }
 
   .backdrop {
     width: 100%;
@@ -197,9 +239,9 @@ export default {
   }
 
   #tvshow-backdrop {
-    width:100%; 
+    width:100%;
     position: relative;
-    top: -50px; 
+    top: -50px;
     z-index: -10;
   }
 
@@ -211,43 +253,43 @@ export default {
   }
 
   #tvshow-title-text {
-    font-size: 50px; 
+    font-size: 50px;
     margin-left: 25px;
   }
 
   #tvshow-first-air-date {
-    font-size: 20px; 
+    font-size: 20px;
     margin-left: 25px;
   }
 
   #tvshow-genres-text {
-    font-size: 14px; 
-    margin-top: -24px; 
+    font-size: 14px;
+    margin-top: -24px;
     margin-left: 70px;
   }
 
   .tvshow-genres {
     display: inline-block;
     padding-left: 20px;
-  }  
+  }
 
   #tvshow-number-seasons {
-    font-size: 14px; 
-    margin-left: 25px; 
+    font-size: 14px;
+    margin-left: 25px;
     margin-top: 45px;
   }
 
   #tvshow-last-air-date {
-    font-size: 14px; 
-    margin-left: 25px; 
+    font-size: 14px;
+    margin-left: 25px;
     color: #ff9941;
   }
 
   #tvshow-follow-btn {
-    width:130px; 
-    height: auto; 
-    margin-top: -32px; 
-    position: absolute; 
+    width:130px;
+    height: auto;
+    margin-top: -32px;
+    position: absolute;
     right: 30px;
   }
 
@@ -273,7 +315,7 @@ export default {
   }
 
   #tvshow-about-icon {
-    width: 8px; 
+    width: 8px;
     margin-right: 5px;
   }
 
@@ -282,7 +324,7 @@ export default {
   }
 
   #tvshow-critics {
-    font-size: 20px; 
+    font-size: 20px;
     margin-bottom: 20px;
   }
 
@@ -295,7 +337,7 @@ export default {
     width: 60%;
     padding-left: 20px;
     vertical-align: top;
-  }  
+  }
 
   #tvshow-cast-text {
     color: white;
@@ -317,15 +359,15 @@ export default {
     white-space: nowrap;
     max-width: 800px;
     margin-right: 0px;
-  }  
+  }
 
   .tvshow-actor-photo {
     display: inline-block;
     padding-left: 0px;
-  }  
+  }
 
   #tvshow-cast-poster {
-    width: 130px; 
+    width: 130px;
     height: auto;
   }
 
@@ -335,7 +377,7 @@ export default {
     color: white;
     margin-bottom: 10px;
     font-size: 11px;
-    width: 130px; 
+    width: 130px;
     text-align: center;
   }
 
@@ -359,11 +401,11 @@ export default {
     position: relative;
     display: inline-block;
     vertical-align: top;
-  }  
+  }
 
   .tvshow-seasons-episodes {
     width: 100%;
-  }  
+  }
 
   #tvshow-season-list {
     margin: 0;
@@ -390,13 +432,13 @@ export default {
     margin-top: -200px;
     z-index: -10;
     position: relative;
-  }  
-  
+  }
+
   #tvshow-episode-list {
     width: 100%;
     background-color: #262835;
   }
-  
+
   .tvshow-episode-number {
     width: 20%;
     display: inline-block;
@@ -404,7 +446,7 @@ export default {
     text-align: center;
     padding: 20px;
   }
-  
+
   .tvshow-episode-number:hover {
     background-color: #ff9941;
   }
@@ -424,17 +466,17 @@ export default {
     height: 300px;
     overflow: hidden;
   }
-  
+
   #tvshow-saw-btn {
-    width:130px; 
-    height: auto; 
+    width:130px;
+    height: auto;
     margin-top: 250px;
-    position: absolute; 
+    position: absolute;
     right: 30px;
   }
 
   #tvshow-episode-poster {
-    width: 100%; 
+    width: 100%;
     height: auto;
   }
 
@@ -445,16 +487,16 @@ export default {
   #tvshow-episode-title {
     font-size: 20px;
   }
-  
+
   #tvshow-episode-air-date {
     color: #ff9941;
-  }  
-  
+  }
+
   #tvshow-episode-run-time {
     text-align: right;
     margin-top: -33px;
   }
-  
+
   #tvshow-episode-overview {
     margin-top: 40px;
     font-weight: 400;
