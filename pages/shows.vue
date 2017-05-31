@@ -3,6 +3,7 @@
   <div class="container">
     <Affix/>
     <div class="content">
+    <searchBar/>
     
       <!-- Alphabetical list of tvshows --> 
       <div class="shows-list-content">
@@ -32,6 +33,7 @@
 <script>
 import axios from 'axios'
 import Affix from '~components/Affix.vue'
+import searchBar from '~components/searchBar.vue'
 
 export default {
   data: () => ({
@@ -39,7 +41,8 @@ export default {
     errors: []
   }),
   components: {
-    Affix
+    Affix,
+    searchBar
   },
 
   // Fetches posts when the component is created.
@@ -129,6 +132,12 @@ export default {
     text-align: center;
   }
   
+  #shows-posters-title[data-v-48e3a7d3]:hover {
+    background-color: #ff9941;
+    color: black;
+    font-weight: 800;
+  }
+  
   #shows-posters-genre {
     position: absolute;
     margin-top: 248px;
@@ -140,5 +149,19 @@ export default {
   #shows-posters-img {
     height: auto;
     width:180px;
+  }
+  
+    ::-webkit-scrollbar {
+      width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+      background: #161C28;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #e8e8e8;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
   }
 </style>

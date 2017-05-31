@@ -4,20 +4,8 @@
     <Affix/>
 
     <div class="content">
-      <!-- Search Bar -->
-      <div  :searchQuery="query" class="search">
-        <input @keyup="search" v-if="searchBarShow" type="text" name="" value="" v-model="query" placeholder="search shows or people">
-        <img @click="searchDone = true" @mouseover="searchBarShow = true"style="height:30px;width:auto;" src="~assets/searchIcon.png" alt="">
-      </div>
 
-      <!-- Results of search -->
-
-      <div id="resultsOfSearch">
-        <li v-for="result in results" ><nuxt-link :to="'/show/' + result.id"><div style="height:5Opx;width:auto;">
-          {{result.name}}
-        </div></nuxt-link></li>
-      </div>
-
+     <searchBar/>
       <!-- Top banner of the tvshow -->
       <div class="testtest" v-if="!searchDone">
       <div class="backdrop-gradient">
@@ -132,6 +120,7 @@
 <script>
 import axios from 'axios'
 import Affix from '~components/Affix.vue'
+import searchBar from '~components/searchBar.vue'
 export default {
   data: () => ({
     img_path: 'https://image.tmdb.org/t/p/w500/',
@@ -219,7 +208,8 @@ export default {
     }
   },
   components: {
-    Affix
+    Affix,
+    searchBar
   },
   watch: {
     '$route' (to, from) {

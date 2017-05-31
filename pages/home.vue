@@ -1,11 +1,9 @@
 <template>
   <div class="container">
+   
     <Affix/>
     <div class="home-content">
-     <div  :searchQuery="query" class="search">
-        <input type="text" name="" value="" v-model="query" placeholder="search shows or people">
-        <img @click="search" style="height:30px;width:auto;" src="~assets/searchIcon.png" alt="">
-      </div>
+    <searchBar/>
       
       <!-- Carousel of tvshows --> 
       <div class="home-carousel-gradient">
@@ -100,6 +98,7 @@
 <!-- Scripts --> 
 <script>
   import Affix from '~components/Affix.vue'
+  import searchBar from '~components/searchBar.vue'
   import axios from 'axios'
 
   export default {
@@ -109,7 +108,8 @@
       errors: []
     }),
     components: {
-      Affix
+      Affix,
+      searchBar
     },
     // Fetches posts when the component is created.
     created () {
