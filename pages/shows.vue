@@ -3,10 +3,16 @@
   <div class="container">
     <Affix/>
     <div class="content">
+<<<<<<< HEAD
       <SearchBar/>
 
 
       <!-- Alphabetical list of tvshows -->
+=======
+    <searchBar/>
+    
+      <!-- Alphabetical list of tvshows --> 
+>>>>>>> 6fd881c21ae184762305a3bf8ffa6dbe4ae402d9
       <div class="shows-list-content">
         <p id="shows-list-text">1-9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</p>
       </div>
@@ -34,7 +40,11 @@
 <script>
 import axios from 'axios'
 import Affix from '~components/Affix.vue'
+<<<<<<< HEAD
 import SearchBar from '~components/searchBar.vue'
+=======
+import searchBar from '~components/searchBar.vue'
+>>>>>>> 6fd881c21ae184762305a3bf8ffa6dbe4ae402d9
 
 export default {
   data: () => ({
@@ -43,7 +53,11 @@ export default {
   }),
   components: {
     Affix,
+<<<<<<< HEAD
     SearchBar
+=======
+    searchBar
+>>>>>>> 6fd881c21ae184762305a3bf8ffa6dbe4ae402d9
   },
 
   // Fetches posts when the component is created.
@@ -132,7 +146,17 @@ export default {
     height: 58px;
     text-align: center;
   }
+<<<<<<< HEAD
 
+=======
+  
+  #shows-posters-title[data-v-48e3a7d3]:hover {
+    background-color: #ff9941;
+    color: black;
+    font-weight: 800;
+  }
+  
+>>>>>>> 6fd881c21ae184762305a3bf8ffa6dbe4ae402d9
   #shows-posters-genre {
     position: absolute;
     margin-top: 248px;
@@ -144,5 +168,19 @@ export default {
   #shows-posters-img {
     height: auto;
     width:180px;
+  }
+  
+    ::-webkit-scrollbar {
+      width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+      background: #161C28;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #e8e8e8;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
   }
 </style>

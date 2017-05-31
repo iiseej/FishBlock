@@ -1,7 +1,9 @@
 <template>
   <div class="container">
+   
     <Affix/>
     <div class="home-content">
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 
@@ -13,6 +15,9 @@
         <input type="text" name="" value="" v-model="query" placeholder="search shows or people">
         <img @click="search" style="height:30px;width:auto;" src="~assets/searchIcon.png" alt="">
       </div>
+=======
+    <searchBar/>
+>>>>>>> 6fd881c21ae184762305a3bf8ffa6dbe4ae402d9
       
       <!-- Carousel of tvshows --> 
 >>>>>>> 44c4b28c75c2cbdcf0ade883c852b0e5bcb8a289
@@ -121,6 +126,7 @@ export default {
       msg: 'this is your home'
 =======
   import Affix from '~components/Affix.vue'
+  import searchBar from '~components/searchBar.vue'
   import axios from 'axios'
 
   export default {
@@ -130,7 +136,8 @@ export default {
       errors: []
     }),
     components: {
-      Affix
+      Affix,
+      searchBar
     },
     // Fetches posts when the component is created.
     created () {
