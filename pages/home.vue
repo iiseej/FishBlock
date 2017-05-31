@@ -2,8 +2,8 @@
   <div class="container">
     <Affix/>
     <div class="home-content">
-      <Searchbar/>
       <h1>{{msg}}</h1>
+
       
       <!-- Carousel of tvshows --> 
       <div class="home-carousel-gradient">
@@ -60,6 +60,7 @@
       
       <!-- Last episodes aired --> 
       
+
     </div>
   </div>
 </template>
