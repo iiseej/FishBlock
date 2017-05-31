@@ -2,15 +2,33 @@
 <template>
   <div class="container">
     <Affix/>
-  <div class="content">
-    <ul>
-      <li v-for="movie in movies"><nuxt-link :to="'/show/' + movie.id"><img style="height:400px;width:auto;" :src="'https://image.tmdb.org/t/p/w500/'+movie.poster_path" alt=""></nuxt-link></li>
-
-    </ul>
+    <div class="content">
+    
+      <!-- Alphabetical list of tvshows --> 
+      <div class="shows-list-content">
+        <p id="shows-list-text">1-9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</p>
+      </div>
+      
+      <!-- Posters of tvshows --> 
+      <div class="shows-posters-content">
+        <ul>
+          <li v-for="movie in movies" id="shows-posters-list">
+            <nuxt-link :to="'/show/' + movie.id">
+              <div>
+               <p id="shows-posters-title">{{movie.original_name}}</p>
+               <p id="shows-posters-genre">genre</p>
+                <img id="shows-posters-img" :src="'https://image.tmdb.org/t/p/w500/'+movie.poster_path" alt="">
+              </div>
+            </nuxt-link>
+          </li>
+        </ul>
+      </div>
   </div>
 </div>
 </template>
 
+
+<!-- Scripts --> 
 <script>
 import axios from 'axios'
 import Affix from '~components/Affix.vue'
@@ -32,6 +50,7 @@ export default {
       // this.movie = response.data
       console.log(response.data.results[0])
       this.movies = response.data.results
+      // this.movies.name_original = response.data.original_name.substring(0, 22)
     })
     .catch(e => {
       this.errors.push(e)
@@ -48,24 +67,68 @@ export default {
   }
 }
 </script>
+
+
+<!-- CSS in order of apparition --> 
 <style media="screen" scoped>
-ul{
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-items: center;
-}
-#container {
-  display: flex;
-  min-height: 100vh;
-}
-.content {
-  display:flex;
-  flex: 1 1 auto;
-  background-color: #262835;
-  height: 2000px;
-  margin-left: 220px;
-  justify-content: center;
-}
+  ul{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+  }
+  #container {
+    min-height: 100vh;
+  }
+  .content {
+    background-color: #262835;
+    height: auto;
+    margin-left: 220px;
+    justify-content: center;
+  }
+  
+  .shows-list-content {
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .shows-posters-content {
+    display: block;
+  }
+  
+  #shows-list-text {
+    font-size: 20px;
+  }
+  
+  #shows-posters-list {
+    margin: 0;
+    padding: 20px;
+  }
+  
+  #shows-posters-title[data-v-48e3a7d3] {
+    position: absolute;
+    margin-top: 212px;
+    padding: 10px 0;
+    font-size: 16px;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 180px;
+    height: 58px;
+    text-align: center;
+  }
+  
+  #shows-posters-genre {
+    position: absolute;
+    margin-top: 248px;
+    font-size: 11px;
+    width: 180px;
+    text-align: center;
+  }
+  
+  #shows-posters-img {
+    height: auto;
+    width:180px;
+  }
 </style>
