@@ -2,8 +2,10 @@
   <div class="container">
     <Affix/>
     <div class="home-content">
-      <h1>{{msg}}</h1>
-
+     <div  :searchQuery="query" class="search">
+        <input type="text" name="" value="" v-model="query" placeholder="search shows or people">
+        <img @click="search" style="height:30px;width:auto;" src="~assets/searchIcon.png" alt="">
+      </div>
       
       <!-- Carousel of tvshows --> 
       <div class="home-carousel-gradient">
@@ -58,8 +60,37 @@
         </div>
       </div>
       
-      <!-- Last episodes aired --> 
-      
+      <!-- Last episodes aired and last critics -->       
+        <div class="home-last-tvshows-aired-critics">
+          <div class="home-last-tvshows-title">
+            <div id="home-last-tvshows-text">
+              <img src="~assets/lastEpisodes.png" id="home-last-tvshows-icon"/> Last episodes
+            </div>
+          </div>
+          <div id="home-last-tvshows-content">
+            <div class="home-last-tvshows-gradient">
+              <li v-for="movie in movies" class="home-last-tvshows-list">
+                <div class="home-last-tvshows-element">
+                  <img :src="img_path + movie.backdrop_path" class="home-last-tvshows-img"/>
+                  <div class="home-last-tvshows-background"></div>
+                  <nuxt-link :to="'/show/' + movie.id"><p class="home-last-tvshows-name">{{movie.name}}</p></nuxt-link>
+                </div>
+              </li>
+            </div>
+          </div>
+          
+          <div class="home-last-tvshows-critics">
+            <div class="home-last-tvshows-critics-title">
+              <div id="home-last-tvshows-critics-text">
+                Last critics <img src="~assets/critics.png" id="home-last-tvshows-critics-icon"/>
+              </div>
+            </div>
+            <div id="home-last-tvshows-critics-content">
+              <div class="home-last-tvshows-critics-gradient">
+              </div>
+            </div>
+          </div> 
+        </div>
 
     </div>
   </div>
@@ -68,18 +99,33 @@
 
 <!-- Scripts --> 
 <script>
-import Affix from '~components/Affix.vue'
+  import Affix from '~components/Affix.vue'
+  import axios from 'axios'
 
-export default {
-  data () {
-    return {
-      msg: 'this is your home'
+  export default {
+    data: () => ({
+      img_path: 'https://image.tmdb.org/t/p/w500/',
+      movies: [],
+      errors: []
+    }),
+    components: {
+      Affix
+    },
+    // Fetches posts when the component is created.
+    created () {
+      axios.get('https://api.themoviedb.org/3/tv/airing_today?api_key=028097eda8e5dd43094c8fcbaf15a506&language=en-US&page=1')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        // this.movie = response.data
+        console.log(response.data.results[0])
+        this.movies = response.data.results
+        this.movies = this.movies.splice(0, 4)
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
     }
-  },
-  components: {
-    Affix
   }
-}
 </script>
 
 
@@ -332,5 +378,123 @@ export default {
   
   .home-carousel-middle {
     width: 28%;
+  }
+  
+  .home-last-tvshows-gradient {
+    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 100%);
+    position: relative;
+    width: 40%;
+    margin-left: -50px;
+  }
+  
+  .home-last-tvshows-aired-critics {
+    margin: 20px 20px 0px 20px;
+    padding: 30px 35px 0px 30px;
+    background-color: #161C28;
+    z-index: -20;
+    position: relative;
+  }
+  
+  .home-last-tvshows-title {
+    width: 40%;
+    padding-right: 10%;
+  }
+
+  #home-last-tvshows-text {
+    color: white;
+    font-size: 12px;
+    font-weight: 800;
+    margin-top: -5px;
+    margin-left: -15px;
+    margin-bottom: 20px;
+  }
+
+  #home-last-tvshows-icon {
+    width: 10px;
+    margin-right: 5px;
+  }
+  
+  #home-last-tvshows-content {
+
+  }
+  
+  .home-last-tvshows-list {
+    margin: 0;
+    padding: 0;
+    height: 60px;
+    list-style: none;
+  }
+  
+  .home-last-tvshows-element {
+    width: 100%;
+    height: 60px;
+    overflow: hidden;
+  }
+  
+  .home-last-tvshows-img {
+    margin-top: -10%;
+    position: relative;
+    z-index: -10;
+  }
+  
+  .home-last-tvshows-background {
+    width: 100%;
+    height: 100%;
+    background-image: url('~assets/showImg.png');
+    background-size: cover;
+  }
+  
+  .home-last-tvshows-name {
+    margin-top: -290px;
+    font-size: 20px;
+    padding-left: 20px;
+  }
+  
+  .home-last-tvshows-critics {
+    
+  }
+  
+  .home-last-tvshows-critics-title {
+    margin-top: -275px;
+  }
+
+  #home-last-tvshows-critics-text {
+    color: white;
+    font-size: 12px;
+    font-weight: 800;
+    margin-top: -5px;
+    margin-right: -15px;
+    margin-bottom: 20px;
+    text-align: right;
+  }
+
+  #home-last-tvshows-critics-icon {
+    width: 10px;
+    margin-left: 5px;
+  }
+  
+  #home-last-tvshows-critics-content {
+    height: 240px;
+  }
+  
+  .home-last-tvshows-critics-gradient {
+    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 100%);
+    position: relative;
+    width: 60%;
+    margin-left: -50px;
+  }
+  
+  ::-webkit-scrollbar {
+      width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+      background: #161C28;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #e8e8e8;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
   }
 </style>
