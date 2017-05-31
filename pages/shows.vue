@@ -3,16 +3,15 @@
   <div class="container">
     <Affix/>
     <div class="content">
-<<<<<<< HEAD
-      <SearchBar/>
+
 
 
       <!-- Alphabetical list of tvshows -->
-=======
+
     <searchBar/>
-    
-      <!-- Alphabetical list of tvshows --> 
->>>>>>> 6fd881c21ae184762305a3bf8ffa6dbe4ae402d9
+
+      <!-- Alphabetical list of tvshows -->
+
       <div class="shows-list-content">
         <p id="shows-list-text">1-9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</p>
       </div>
@@ -40,11 +39,7 @@
 <script>
 import axios from 'axios'
 import Affix from '~components/Affix.vue'
-<<<<<<< HEAD
-import SearchBar from '~components/searchBar.vue'
-=======
 import searchBar from '~components/searchBar.vue'
->>>>>>> 6fd881c21ae184762305a3bf8ffa6dbe4ae402d9
 
 export default {
   data: () => ({
@@ -53,13 +48,8 @@ export default {
   }),
   components: {
     Affix,
-<<<<<<< HEAD
-    SearchBar
-=======
     searchBar
->>>>>>> 6fd881c21ae184762305a3bf8ffa6dbe4ae402d9
   },
-
   // Fetches posts when the component is created.
   created () {
     axios.get('https://api.themoviedb.org/3/discover/tv?api_key=028097eda8e5dd43094c8fcbaf15a506&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&vote_average.gte=7&include_null_first_air_dates=false')
@@ -149,13 +139,13 @@ export default {
 <<<<<<< HEAD
 
 =======
-  
+
   #shows-posters-title[data-v-48e3a7d3]:hover {
     background-color: #ff9941;
     color: black;
     font-weight: 800;
   }
-  
+
 >>>>>>> 6fd881c21ae184762305a3bf8ffa6dbe4ae402d9
   #shows-posters-genre {
     position: absolute;
@@ -169,7 +159,7 @@ export default {
     height: auto;
     width:180px;
   }
-  
+
     ::-webkit-scrollbar {
       width: 12px;
   }

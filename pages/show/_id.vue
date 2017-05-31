@@ -4,12 +4,8 @@
     <Affix/>
 
     <div class="content">
-<<<<<<< HEAD
-      <!-- Search Bar -->
-      <SearchBar/>
-=======
->>>>>>> 6fd881c21ae184762305a3bf8ffa6dbe4ae402d9
 
+      <!-- Search Bar -->
      <searchBar/>
       <!-- Top banner of the tvshow -->
       <div class="testtest" v-if="!searchDone">
@@ -125,12 +121,8 @@
 <script>
 import axios from 'axios'
 import Affix from '~components/Affix.vue'
-<<<<<<< HEAD
-import SearchBar from '~components/searchBar.vue'
-
-=======
 import searchBar from '~components/searchBar.vue'
->>>>>>> 6fd881c21ae184762305a3bf8ffa6dbe4ae402d9
+
 export default {
   data: () => ({
     img_path: 'https://image.tmdb.org/t/p/w500/',
@@ -208,11 +200,7 @@ export default {
   },
   components: {
     Affix,
-<<<<<<< HEAD
-    SearchBar
-=======
     searchBar
->>>>>>> 6fd881c21ae184762305a3bf8ffa6dbe4ae402d9
   },
   watch: {
     '$route' (to, from) {
