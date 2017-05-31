@@ -11,9 +11,9 @@
     <searchBar/>
 
       <!-- Alphabetical list of tvshows -->
-
-      <div class="shows-list-content">
-        <p id="shows-list-text">1-9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</p>
+      <button @click="nextPage"type="button" name="button">next page</button>
+      <div class="shows-list-content" >
+        <p v-for="letter in alphabet" id="shows-list-text" >{{letter}}</p>
       </div>
 
       <!-- Posters of tvshows -->
@@ -44,15 +44,33 @@ import searchBar from '~components/searchBar.vue'
 export default {
   data: () => ({
     movies: [],
-    errors: []
+    errors: [],
+    alphabet: ['0-9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+    page: 1
   }),
+  methods: {
+    nextPage: function () {
+      this.page++
+      axios.get('https://api.themoviedb.org/3/discover/tv?api_key=028097eda8e5dd43094c8fcbaf15a506&language=en-US&sort_by=popularity.desc&page=' + this.page + '&timezone=America%2FNew_York&vote_average.gte=7&include_null_first_air_dates=false')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        // this.movie = response.data
+        console.log(response.data.results[0])
+        this.movies = response.data.results
+        // this.movies.name_original = response.data.original_name.substring(0, 22)
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    }
+  },
   components: {
     Affix,
     searchBar
   },
   // Fetches posts when the component is created.
   created () {
-    axios.get('https://api.themoviedb.org/3/discover/tv?api_key=028097eda8e5dd43094c8fcbaf15a506&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&vote_average.gte=7&include_null_first_air_dates=false')
+    axios.get('https://api.themoviedb.org/3/discover/tv?api_key=028097eda8e5dd43094c8fcbaf15a506&language=en-US&sort_by=popularity.desc&page=' + this.page + '&timezone=America%2FNew_York&vote_average.gte=7&include_null_first_air_dates=false')
     .then(response => {
       // JSON responses are automatically parsed.
       // this.movie = response.data
@@ -108,7 +126,8 @@ export default {
 
   .shows-list-content {
     width: 100%;
-    display: block;
+    display: flex;
+    justify-content: space-around;
     text-align: center;
     margin-top: 50px;
   }
