@@ -4,8 +4,10 @@
     <Affix/>
 
     <div class="content">
+
      <searchBar/>
       <!-- Top banner of the tvshow -->
+      <div class="testtest" v-if="!searchDone">
       <div class="backdrop-gradient">
         <div class="backdrop">
           <img id="tvshow-backdrop" :src="'https://image.tmdb.org/t/p/original/'+movie.backdrop_path" alt="banner">
@@ -108,7 +110,7 @@
                   <p class="tvshow-critics-likes-text">6</p>
                 </div>
               </div>
-            </div>
+      </div>      </div>
     </div>
   </div>
 </template>
@@ -143,8 +145,10 @@ export default {
     seasonPoster: '',
     seasonEpisodesNumber: 0,
     showEpisodes: true,
-    results: '',
-    query: ''
+    results: [],
+    query: '',
+    searchBarShow: false,
+    searchDone: false
   }),
   props: [
     'searchQuery'
@@ -192,7 +196,7 @@ export default {
       })
     },
     search: function () {
-      axios.get('https://api.themoviedb.org/3/search/multi?api_key=' + this.apiKey + '&language=en-US&query=' + this.query + '&page=1&include_adult=false')
+      axios.get('https://api.themoviedb.org/3/search/tv?api_key=' + this.apiKey + '&language=en-US&query=' + this.query + '&page=1')
       .then(response => {
         // JSON responses are automatically parsed.
         this.results = response.data.results
@@ -207,7 +211,39 @@ export default {
     Affix,
     searchBar
   },
-
+  watch: {
+    '$route' (to, from) {
+      axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '?api_key=' + this.apiKey + '&language=en-US')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.movie = response.data
+        this.movie.first_air_date = response.data.first_air_date.substring(0, 4)
+        this.overview = response.data.overview
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+      // datas of the credits tvshow
+      axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '/credits?api_key=' + this.apiKey + '&language=en-US')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.cast = response.data.cast
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+      // datas of the tvshow seasons
+      // for i=1  to this.seasons
+      // apikey
+      axios.get('https://api.themoviedb.org/3/person/122616?api_key=' + this.apiKey + '&language=en-U')
+      .then(response => {
+        // JSON responses are automatically parsed.
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    }
+  },
   // Fetches posts when the component is created.
   created () {
     // datas of the global tvshow
