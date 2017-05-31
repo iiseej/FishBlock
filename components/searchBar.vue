@@ -1,10 +1,19 @@
 <template lang="html">
   <div>
+
+
+
   <div  :searchQuery="query" class="search">
     <input @keyup="search" v-if="searchBarShow" type="text" name="" value="" v-model="query" placeholder="search shows or people">
     <img @click="searchDone = true" @mouseover="searchBarShow = true"style="height:30px;width:auto;" src="~assets/searchIcon.png" alt="">
   </div>
+
+
   <!-- Results of search -->
+
+
+  <!-- Results of search -->
+
   <div id="resultsOfSearch">
     <li v-for="result in results" ><nuxt-link :to="'/show/' + result.id"><div style="height:5Opx;width:auto;">
       {{result.name}}
@@ -12,6 +21,7 @@
   </div>
   </div>
 </template>
+
 <script>
 import axios from 'axios'
 export default {
@@ -38,5 +48,6 @@ export default {
   }
 }
 </script>
+
 <style lang="css">
 </style>

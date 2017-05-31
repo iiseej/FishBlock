@@ -5,6 +5,7 @@
 
     <div class="content">
 
+      <!-- Search Bar -->
      <searchBar/>
       <!-- Top banner of the tvshow -->
       <div class="testtest" v-if="!searchDone">
@@ -121,6 +122,7 @@
 import axios from 'axios'
 import Affix from '~components/Affix.vue'
 import searchBar from '~components/searchBar.vue'
+
 export default {
   data: () => ({
     img_path: 'https://image.tmdb.org/t/p/w500/',
@@ -190,17 +192,6 @@ export default {
       .then(response => {
         // JSON responses are automatically parsed.
         this.seasonEpisodesNumber = response.data.episodes.length
-      })
-      .catch(e => {
-        this.errors.push(e)
-      })
-    },
-    search: function () {
-      axios.get('https://api.themoviedb.org/3/search/tv?api_key=' + this.apiKey + '&language=en-US&query=' + this.query + '&page=1')
-      .then(response => {
-        // JSON responses are automatically parsed.
-        this.results = response.data.results
-        console.log(this.results)
       })
       .catch(e => {
         this.errors.push(e)

@@ -1,14 +1,28 @@
 <template>
   <div class="container">
-   
+
     <Affix/>
     <div class="home-content">
+
+
+
+      <h1>{{msg}}</h1>
+
+      <!-- Carousel of tvshows -->
+
+     <div  :searchQuery="query" class="search">
+        <input type="text" name="" value="" v-model="query" placeholder="search shows or people">
+        <img @click="search" style="height:30px;width:auto;" src="~assets/searchIcon.png" alt="">
+      </div>
+
     <searchBar/>
-      
-      <!-- Carousel of tvshows --> 
+
+
+      <!-- Carousel of tvshows -->
+
       <div class="home-carousel-gradient">
         <div id="home-carousel">
-         
+
           <div class="home-carousel-side">
             <a href="show/53606" id="love">
               <div class="home-carousel-a-img"></div>
@@ -54,11 +68,15 @@
               </div>
             </a>
           </div>
-          
+
         </div>
       </div>
-      
-      <!-- Last episodes aired and last critics -->       
+
+
+      <!-- Last episodes aired -->
+
+
+      <!-- Last episodes aired and last critics -->
         <div class="home-last-tvshows-aired-critics">
           <div class="home-last-tvshows-title">
             <div id="home-last-tvshows-text">
@@ -76,7 +94,7 @@
               </li>
             </div>
           </div>
-          
+
           <div class="home-last-tvshows-critics">
             <div class="home-last-tvshows-critics-title">
               <div id="home-last-tvshows-critics-text">
@@ -87,56 +105,57 @@
               <div class="home-last-tvshows-critics-gradient">
               </div>
             </div>
-          </div> 
+          </div>
         </div>
+
 
     </div>
   </div>
 </template>
 
 
-<!-- Scripts --> 
+<!-- Scripts -->
 <script>
-  import Affix from '~components/Affix.vue'
-  import searchBar from '~components/searchBar.vue'
-  import axios from 'axios'
+import Affix from '~components/Affix.vue'
+import searchBar from '~components/searchBar.vue'
+import axios from 'axios'
 
-  export default {
-    data: () => ({
-      img_path: 'https://image.tmdb.org/t/p/w500/',
-      movies: [],
-      errors: []
-    }),
-    components: {
-      Affix,
-      searchBar
-    },
-    // Fetches posts when the component is created.
-    created () {
-      axios.get('https://api.themoviedb.org/3/tv/airing_today?api_key=028097eda8e5dd43094c8fcbaf15a506&language=en-US&page=1')
-      .then(response => {
-        // JSON responses are automatically parsed.
-        // this.movie = response.data
-        console.log(response.data.results[0])
-        this.movies = response.data.results
-        this.movies = this.movies.splice(0, 4)
-      })
-      .catch(e => {
-        this.errors.push(e)
-      })
-    }
+export default {
+  data: () => ({
+    img_path: 'https://image.tmdb.org/t/p/w500/',
+    movies: [],
+    errors: []
+  }),
+  components: {
+    Affix,
+    searchBar
+  },
+  // Fetches posts when the component is created.
+  created () {
+    axios.get('https://api.themoviedb.org/3/tv/airing_today?api_key=028097eda8e5dd43094c8fcbaf15a506&language=en-US&page=1')
+    .then(response => {
+      // JSON responses are automatically parsed.
+      // this.movie = response.data
+      console.log(response.data.results[0])
+      this.movies = response.data.results
+      this.movies = this.movies.splice(0, 4)
+    })
+    .catch(e => {
+      this.errors.push(e)
+    })
   }
+}
 </script>
 
 
 
-<!-- CSS in order of apparition --> 
+<!-- CSS in order of apparition -->
 <style lang="css">
   #container {
     display: flex;
     min-height: 100vh;
   }
-  
+
   .home-content {
     flex: 1 1 auto;
     background-color: #262835;
@@ -151,24 +170,24 @@
     margin-top: 50px;
     position: relative;
   }
-  
+
   .home-carousel-gradient {
     background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
     position: relative;
   }
-  
+
   .home-carousel-side {
     width: 18%;
     overflow: hidden;
     height: 250px;
   }
-  
+
   .home-carousel-texts {
     width: 100%;
     height: 100%;
     margin-top: -250px;
   }
-  
+
   .home-carousel-a-img {
     height: 100%;
     width: auto;
@@ -179,159 +198,159 @@
     position: relative;
     z-index: -10;
   }
-  
+
   /* ---------- Carousel dynamiq ---------- */
   .home-carousel-a-text {
     font-size: 20px;
     text-align: center;
     padding-top: 190px;
   }
-  
+
   .home-carousel-a-genre {
     text-align: center;
   }
-  
+
   #love:hover .home-carousel-a-genre {
     z-index: 0;
   }
-  
+
   #love:hover .home-carousel-a-text {
     z-index: 0;
   }
-  
+
   /* side A */
   .home-carousel-a-text {
     position: relative;
     z-index: -10;
   }
-  
+
   .home-carousel-a-genre {
     position: relative;
     z-index: -10;
   }
   /* side A */
-  
+
   .home-carousel-b-text {
     font-size: 20px;
     text-align: center;
     padding-top: 190px;
   }
-  
+
   .home-carousel-b-genre {
     text-align: center;
   }
-  
+
   #mrRobot:hover .home-carousel-b-genre {
     z-index: 0;
   }
-  
+
   #mrRobot:hover .home-carousel-b-text {
     z-index: 0;
   }
-  
+
   /* side B */
   .home-carousel-b-text {
     position: relative;
     z-index: -10;
   }
-  
+
   .home-carousel-b-genre {
     position: relative;
     z-index: -10;
   }
   /* side B */
-  
+
   .home-carousel-c-text {
     font-size: 20px;
     text-align: center;
     padding-top: 190px;
   }
-  
+
   .home-carousel-c-genre {
     text-align: center;
   }
-  
+
   #sherlock:hover .home-carousel-c-genre {
     z-index: 0;
   }
-  
+
   #sherlock:hover .home-carousel-c-text {
     z-index: 0;
   }
-  
+
   /* middle C */
   .home-carousel-c-text {
     position: relative;
     z-index: -10;
   }
-  
+
   .home-carousel-c-genre {
     position: relative;
     z-index: -10;
   }
   /* middle C */
-  
+
   .home-carousel-d-text {
     font-size: 20px;
     text-align: center;
     padding-top: 190px;
   }
-  
+
   .home-carousel-d-genre {
     text-align: center;
   }
-  
+
   #westworld:hover .home-carousel-d-genre {
     z-index: 0;
   }
-  
+
   #westworld:hover .home-carousel-d-text {
     z-index: 0;
   }
-  
+
   /* middle D */
   .home-carousel-d-text {
     position: relative;
     z-index: -10;
   }
-  
+
   .home-carousel-d-genre {
     position: relative;
     z-index: -10;
   }
   /* middle D */
-  
+
   .home-carousel-e-text {
     font-size: 20px;
     text-align: center;
     padding-top: 190px;
   }
-  
+
   .home-carousel-e-genre {
     text-align: center;
   }
-  
+
   #fargo:hover .home-carousel-e-genre {
     z-index: 0;
   }
-  
+
   #fargo:hover .home-carousel-e-text {
     z-index: 0;
   }
-  
+
   /* middle E */
   .home-carousel-e-text {
     position: relative;
     z-index: -10;
   }
-  
+
   .home-carousel-e-genre {
     position: relative;
     z-index: -10;
   }
   /* middle E */
   /* ---------- Carousel dynamiq ---------- */
-  
+
   .home-carousel-b-img {
     height: 100%;
     width: auto;
@@ -342,7 +361,7 @@
     position: relative;
     z-index: -10;
   }
-  
+
   .home-carousel-c-img {
     height: 100%;
     width: auto;
@@ -353,7 +372,7 @@
     position: relative;
     z-index: -10;
   }
-  
+
   .home-carousel-d-img {
     height: 100%;
     width: auto;
@@ -364,7 +383,7 @@
     position: relative;
     z-index: -10;
   }
-  
+
   .home-carousel-e-img {
     height: 100%;
     width: auto;
@@ -375,18 +394,18 @@
     position: relative;
     z-index: -10;
   }
-  
+
   .home-carousel-middle {
     width: 28%;
   }
-  
+
   .home-last-tvshows-gradient {
     background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 100%);
     position: relative;
     width: 40%;
     margin-left: -50px;
   }
-  
+
   .home-last-tvshows-aired-critics {
     margin: 20px 20px 0px 20px;
     padding: 30px 35px 0px 30px;
@@ -394,7 +413,7 @@
     z-index: -20;
     position: relative;
   }
-  
+
   .home-last-tvshows-title {
     width: 40%;
     padding-right: 10%;
@@ -413,47 +432,47 @@
     width: 10px;
     margin-right: 5px;
   }
-  
+
   #home-last-tvshows-content {
 
   }
-  
+
   .home-last-tvshows-list {
     margin: 0;
     padding: 0;
     height: 60px;
     list-style: none;
   }
-  
+
   .home-last-tvshows-element {
     width: 100%;
     height: 60px;
     overflow: hidden;
   }
-  
+
   .home-last-tvshows-img {
     margin-top: -10%;
     position: relative;
     z-index: -10;
   }
-  
+
   .home-last-tvshows-background {
     width: 100%;
     height: 100%;
     background-image: url('~assets/showImg.png');
     background-size: cover;
   }
-  
+
   .home-last-tvshows-name {
     margin-top: -290px;
     font-size: 20px;
     padding-left: 20px;
   }
-  
+
   .home-last-tvshows-critics {
-    
+
   }
-  
+
   .home-last-tvshows-critics-title {
     margin-top: -275px;
   }
@@ -472,18 +491,18 @@
     width: 10px;
     margin-left: 5px;
   }
-  
+
   #home-last-tvshows-critics-content {
     height: 240px;
   }
-  
+
   .home-last-tvshows-critics-gradient {
     background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 100%);
     position: relative;
     width: 60%;
     margin-left: -50px;
   }
-  
+
   ::-webkit-scrollbar {
       width: 12px;
   }

@@ -3,14 +3,20 @@
   <div class="container">
     <Affix/>
     <div class="content">
+
+
+
+      <!-- Alphabetical list of tvshows -->
+
     <searchBar/>
-    
-      <!-- Alphabetical list of tvshows --> 
+
+      <!-- Alphabetical list of tvshows -->
+
       <div class="shows-list-content">
         <p id="shows-list-text">1-9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</p>
       </div>
-      
-      <!-- Posters of tvshows --> 
+
+      <!-- Posters of tvshows -->
       <div class="shows-posters-content">
         <ul>
           <li v-for="movie in movies" id="shows-posters-list">
@@ -29,7 +35,7 @@
 </template>
 
 
-<!-- Scripts --> 
+<!-- Scripts -->
 <script>
 import axios from 'axios'
 import Affix from '~components/Affix.vue'
@@ -44,7 +50,6 @@ export default {
     Affix,
     searchBar
   },
-
   // Fetches posts when the component is created.
   created () {
     axios.get('https://api.themoviedb.org/3/discover/tv?api_key=028097eda8e5dd43094c8fcbaf15a506&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&vote_average.gte=7&include_null_first_air_dates=false')
@@ -82,7 +87,7 @@ export default {
 </script>
 
 
-<!-- CSS in order of apparition --> 
+<!-- CSS in order of apparition -->
 <style media="screen" scoped>
   ul{
     display: flex;
@@ -100,27 +105,27 @@ export default {
     margin-left: 220px;
     justify-content: center;
   }
-  
+
   .shows-list-content {
     width: 100%;
     display: block;
     text-align: center;
     margin-top: 50px;
   }
-  
+
   .shows-posters-content {
     display: block;
   }
-  
+
   #shows-list-text {
     font-size: 20px;
   }
-  
+
   #shows-posters-list {
     margin: 0;
     padding: 20px;
   }
-  
+
   #shows-posters-title[data-v-48e3a7d3] {
     position: absolute;
     margin-top: 212px;
@@ -131,13 +136,17 @@ export default {
     height: 58px;
     text-align: center;
   }
-  
+<<<<<<< HEAD
+
+=======
+
   #shows-posters-title[data-v-48e3a7d3]:hover {
     background-color: #ff9941;
     color: black;
     font-weight: 800;
   }
-  
+
+>>>>>>> 6fd881c21ae184762305a3bf8ffa6dbe4ae402d9
   #shows-posters-genre {
     position: absolute;
     margin-top: 248px;
@@ -145,12 +154,12 @@ export default {
     width: 180px;
     text-align: center;
   }
-  
+
   #shows-posters-img {
     height: auto;
     width:180px;
   }
-  
+
     ::-webkit-scrollbar {
       width: 12px;
   }
