@@ -2,16 +2,7 @@
   <div class="container">
     <Affix/>
     <div class="home-content">
-      <h1>{{msg}}</h1><Dropdown/>
-      <div class="dropdown">
-        <button class="btn dropdown-toggle sr-only" type="button" id="" data-toggle="dropdown">
-
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="">
-
-        </ul>
-      </div>
+      <h1>{{msg}}</h1>
     </div>
   </div>
 
@@ -19,7 +10,6 @@
 
 <script>
 import Affix from '~components/Affix.vue'
-import Dropdown from '~components/Dropdown.vue'
 
 export default {
   data () {
@@ -28,8 +18,7 @@ export default {
     }
   },
   components: {
-    Affix,
-    Dropdown
+    Affix
   }
 
 }
