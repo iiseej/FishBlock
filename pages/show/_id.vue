@@ -4,10 +4,7 @@
     <Affix/>
 
     <div class="content">
-      <div  :searchQuery="query" class="search">
-        <input type="text" name="" value="" v-model="query" placeholder="search shows or people">
-        <img @click="search" style="height:30px;width:auto;" src="~assets/searchIcon.png" alt="">
-      </div>
+     <searchBar/>
       <!-- Top banner of the tvshow -->
       <div class="backdrop-gradient">
         <div class="backdrop">
@@ -121,6 +118,7 @@
 <script>
 import axios from 'axios'
 import Affix from '~components/Affix.vue'
+import searchBar from '~components/searchBar.vue'
 export default {
   data: () => ({
     img_path: 'https://image.tmdb.org/t/p/w500/',
@@ -206,7 +204,8 @@ export default {
     }
   },
   components: {
-    Affix
+    Affix,
+    searchBar
   },
 
   // Fetches posts when the component is created.
