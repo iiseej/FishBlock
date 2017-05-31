@@ -3,13 +3,15 @@
   <div class="container">
     <Affix/>
     <div class="content">
-    
-      <!-- Alphabetical list of tvshows --> 
+      <SearchBar/>
+
+
+      <!-- Alphabetical list of tvshows -->
       <div class="shows-list-content">
         <p id="shows-list-text">1-9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</p>
       </div>
-      
-      <!-- Posters of tvshows --> 
+
+      <!-- Posters of tvshows -->
       <div class="shows-posters-content">
         <ul>
           <li v-for="movie in movies" id="shows-posters-list">
@@ -28,10 +30,11 @@
 </template>
 
 
-<!-- Scripts --> 
+<!-- Scripts -->
 <script>
 import axios from 'axios'
 import Affix from '~components/Affix.vue'
+import SearchBar from '~components/searchBar.vue'
 
 export default {
   data: () => ({
@@ -39,7 +42,8 @@ export default {
     errors: []
   }),
   components: {
-    Affix
+    Affix,
+    SearchBar
   },
 
   // Fetches posts when the component is created.
@@ -79,7 +83,7 @@ export default {
 </script>
 
 
-<!-- CSS in order of apparition --> 
+<!-- CSS in order of apparition -->
 <style media="screen" scoped>
   ul{
     display: flex;
@@ -97,27 +101,27 @@ export default {
     margin-left: 220px;
     justify-content: center;
   }
-  
+
   .shows-list-content {
     width: 100%;
     display: block;
     text-align: center;
     margin-top: 50px;
   }
-  
+
   .shows-posters-content {
     display: block;
   }
-  
+
   #shows-list-text {
     font-size: 20px;
   }
-  
+
   #shows-posters-list {
     margin: 0;
     padding: 20px;
   }
-  
+
   #shows-posters-title[data-v-48e3a7d3] {
     position: absolute;
     margin-top: 212px;
@@ -128,7 +132,7 @@ export default {
     height: 58px;
     text-align: center;
   }
-  
+
   #shows-posters-genre {
     position: absolute;
     margin-top: 248px;
@@ -136,7 +140,7 @@ export default {
     width: 180px;
     text-align: center;
   }
-  
+
   #shows-posters-img {
     height: auto;
     width:180px;
