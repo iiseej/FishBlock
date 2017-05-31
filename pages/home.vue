@@ -5,7 +5,6 @@
 
 
       <h1>{{msg}}</h1>
-      <SearchBar/>
 
       <!-- Carousel of tvshows -->
       <div class="home-carousel-gradient">
@@ -71,7 +70,6 @@
 <!-- Scripts -->
 <script>
 import Affix from '~components/Affix.vue'
-import SearchBar from '~components/searchBar.vue'
 export default {
   data () {
     return {
@@ -79,8 +77,7 @@ export default {
     }
   },
   components: {
-    Affix,
-    SearchBar
+    Affix
   }
 }
 </script>
