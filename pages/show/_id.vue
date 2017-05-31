@@ -55,7 +55,7 @@
       </div>
 
       <!-- Details of episodes and seasons -->
-      <div @click="showEpisodesFn" class="seasons-gradient">
+      <div @click="showEpisodesFn, showEpisodes = true" @mouseleave="showEpisodes = false" class="seasons-gradient">
         <div  class="tvshow-seasons-episodes">
           <ul>
             <li  id="tvshow-season-list" v-for="(season, index) in movie.seasons">
@@ -146,7 +146,7 @@ export default {
     actorBio: '',
     seasonPoster: '',
     seasonEpisodesNumber: 0,
-    showEpisodes: true,
+    showEpisodes: false,
     results: [],
     query: '',
     searchBarShow: false,
@@ -455,6 +455,7 @@ export default {
   #tvshow-cast-poster {
     width: 130px;
     height: auto;
+    cursor:zoom-in;
   }
 
   .tvshow-actor-name {
@@ -487,6 +488,7 @@ export default {
     position: relative;
     display: inline-block;
     vertical-align: top;
+    cursor:pointer;
   }
 
   .tvshow-seasons-episodes {
