@@ -1,12 +1,12 @@
 <template lang="html">
   <div>
-    <div :searchQuery="query" id="search-bar">
-      <input @keyup="search" v-if="searchBarShow" type="text" name="" value="" v-model="query" placeholder="   Search tvshows" id="search-bar-input">
+    <div :searchQuery="query" id="search-bar" @mouseleave="searchBarShow = false">
+      <input @keyup="search(), searchResults = true" v-if="searchBarShow" type="text" name="" value="" v-model="query" placeholder="   Search tvshows" id="search-bar-input">
       <img @click="searchDone = true" @mouseover="searchBarShow = true" id="search-bar-img" src="~assets/searchIcon.png" alt="search button">
     </div>
 
     <!-- Results of search -->
-    <div id="search-bar-results">
+    <div id="search-bar-results" v-if="searchResults" @mouseleave="searchResults = false">
       <li v-for="result in results" class="search-bar-results-element">
         <nuxt-link :to="'/show/' + result.id">
           <div class="search-bar-results-link">
@@ -30,7 +30,8 @@
       results: [],
       query: '',
       searchBarShow: false,
-      searchDone: false
+      searchDone: false,
+      searchResults: true
     }),
     methods: {
       search: function () {

@@ -21,7 +21,7 @@ module.exports = {
       component: resolve(__dirname, 'pages/404.vue')
     })
   }
-},
+}
   /*
   ** Customize the progress-bar color
   */
