@@ -11,7 +11,9 @@
     <searchBar/>
 
       <!-- Alphabetical list of tvshows -->
+      <button @click="prevPage"type="button" name="button">previous page</button>
       <button @click="nextPage"type="button" name="button">next page</button>
+
       <div class="shows-list-content" >
         <p v-for="letter in alphabet" id="shows-list-text" >{{letter}}</p>
       </div>
@@ -43,6 +45,7 @@ import searchBar from '~components/searchBar.vue'
 
 export default {
   data: () => ({
+    apiKey: '028097eda8e5dd43094c8fcbaf15a506',
     movies: [],
     errors: [],
     alphabet: ['0-9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
@@ -50,8 +53,8 @@ export default {
   }),
   methods: {
     nextPage: function () {
-      this.page++
-      axios.get('https://api.themoviedb.org/3/discover/tv?api_key=028097eda8e5dd43094c8fcbaf15a506&language=en-US&sort_by=popularity.desc&page=' + this.page + '&timezone=America%2FNew_York&vote_average.gte=7&include_null_first_air_dates=false')
+      this.page = this.page + 1
+      axios.get('https://api.themoviedb.org/3/discover/tv?api_key=' + this.apiKey + '&language=en-US&sort_by=popularity.desc&page=' + this.page + '&timezone=America%2FNew_York&vote_average.gte=7&include_null_first_air_dates=false')
       .then(response => {
         // JSON responses are automatically parsed.
         // this.movie = response.data
@@ -62,6 +65,24 @@ export default {
       .catch(e => {
         this.errors.push(e)
       })
+    },
+    prevPage: function () {
+      if (this.page === 1) {
+        return
+      } else {
+        this.page = this.page - 1
+        axios.get('https://api.themoviedb.org/3/discover/tv?api_key=' + this.apiKey + '&language=en-US&sort_by=popularity.desc&page=' + this.page + '&timezone=America%2FNew_York&vote_average.gte=7&include_null_first_air_dates=false')
+        .then(response => {
+          // JSON responses are automatically parsed.
+          // this.movie = response.data
+          console.log(response.data.results[0])
+          this.movies = response.data.results
+          // this.movies.name_original = response.data.original_name.substring(0, 22)
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
+      }
     }
   },
   components: {
@@ -70,7 +91,7 @@ export default {
   },
   // Fetches posts when the component is created.
   created () {
-    axios.get('https://api.themoviedb.org/3/discover/tv?api_key=028097eda8e5dd43094c8fcbaf15a506&language=en-US&sort_by=popularity.desc&page=' + this.page + '&timezone=America%2FNew_York&vote_average.gte=7&include_null_first_air_dates=false')
+    axios.get('https://api.themoviedb.org/3/discover/tv?api_key=' + this.apiKey + '&language=en-US&sort_by=popularity.desc&page=' + this.page + '&timezone=America%2FNew_York&vote_average.gte=7&include_null_first_air_dates=false')
     .then(response => {
       // JSON responses are automatically parsed.
       // this.movie = response.data
@@ -80,26 +101,6 @@ export default {
     .catch(e => {
       this.errors.push(e)
     })
-    axios.get('https://api.themoviedb.org/3/discover/tv?api_key=028097eda8e5dd43094c8fcbaf15a506&language=en-US&sort_by=popularity.desc&page=2&timezone=America%2FNew_York&vote_average.gte=7&include_null_first_air_dates=false')
-    .then(response => {
-      // JSON responses are automatically parsed.
-      // this.movie = response.data
-      console.log(response.data.results[0])
-      this.movies = response.data.results
-      // this.movies.name_original = response.data.original_name.substring(0, 22)
-    })
-    .catch(e => {
-      this.errors.push(e)
-    })
-
-    // async / await version (created() becomes async created())
-    //
-    // try {
-    //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
-    //   this.posts = response.data
-    // } catch (e) {
-    //   this.errors.push(e)
-    // }
   }
 }
 </script>
@@ -138,6 +139,14 @@ export default {
 
   #shows-list-text {
     font-size: 20px;
+
+  }
+  #shows-list-text:hover {
+    -moz-transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+    color: #ff9941;
+
   }
 
   #shows-posters-list {
@@ -155,9 +164,6 @@ export default {
     height: 58px;
     text-align: center;
   }
-<<<<<<< HEAD
-
-=======
 
   #shows-posters-title[data-v-48e3a7d3]:hover {
     background-color: #ff9941;
@@ -165,7 +171,6 @@ export default {
     font-weight: 800;
   }
 
->>>>>>> 6fd881c21ae184762305a3bf8ffa6dbe4ae402d9
   #shows-posters-genre {
     position: absolute;
     margin-top: 248px;
