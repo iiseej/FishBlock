@@ -3,23 +3,9 @@
 
     <Affix/>
     <div class="home-content">
-
-
-
-      <h1>{{msg}}</h1>
-
-      <!-- Carousel of tvshows -->
-
-     <div  :searchQuery="query" class="search">
-        <input type="text" name="" value="" v-model="query" placeholder="search shows or people">
-        <img @click="search" style="height:30px;width:auto;" src="~assets/searchIcon.png" alt="">
-      </div>
-
     <searchBar/>
-
-
+    <div id="space-top"></div>
       <!-- Carousel of tvshows -->
-
       <div class="home-carousel-gradient">
         <div id="home-carousel">
 
@@ -72,10 +58,6 @@
         </div>
       </div>
 
-
-      <!-- Last episodes aired -->
-
-
       <!-- Last episodes aired and last critics -->
         <div class="home-last-tvshows-aired-critics">
           <div class="home-last-tvshows-title">
@@ -108,7 +90,6 @@
           </div>
         </div>
 
-
     </div>
   </div>
 </template>
@@ -116,35 +97,35 @@
 
 <!-- Scripts -->
 <script>
-import Affix from '~components/Affix.vue'
-import searchBar from '~components/searchBar.vue'
-import axios from 'axios'
+  import Affix from '~components/Affix.vue'
+  import searchBar from '~components/searchBar.vue'
+  import axios from 'axios'
 
-export default {
-  data: () => ({
-    img_path: 'https://image.tmdb.org/t/p/w500/',
-    movies: [],
-    errors: []
-  }),
-  components: {
-    Affix,
-    searchBar
-  },
-  // Fetches posts when the component is created.
-  created () {
-    axios.get('https://api.themoviedb.org/3/tv/airing_today?api_key=028097eda8e5dd43094c8fcbaf15a506&language=en-US&page=1')
-    .then(response => {
-      // JSON responses are automatically parsed.
-      // this.movie = response.data
-      console.log(response.data.results[0])
-      this.movies = response.data.results
-      this.movies = this.movies.splice(0, 4)
-    })
-    .catch(e => {
-      this.errors.push(e)
-    })
+  export default {
+    data: () => ({
+      img_path: 'https://image.tmdb.org/t/p/w500/',
+      movies: [],
+      errors: []
+    }),
+    components: {
+      Affix,
+      searchBar
+    },
+    // Fetches posts when the component is created.
+    created () {
+      axios.get('https://api.themoviedb.org/3/tv/airing_today?api_key=028097eda8e5dd43094c8fcbaf15a506&language=en-US&page=1')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        // this.movie = response.data
+        console.log(response.data.results[0])
+        this.movies = response.data.results
+        this.movies = this.movies.splice(0, 4)
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    }
   }
-}
 </script>
 
 
@@ -165,9 +146,13 @@ export default {
     position: relative;
   }
 
+  #space-top {
+    height: 50px;
+  }
+
   #home-carousel {
     display: flex;
-    margin-top: 50px;
+    margin-top: 0px;
     position: relative;
   }
 

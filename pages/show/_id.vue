@@ -4,7 +4,6 @@
     <Affix/>
 
     <div class="content">
-
       <!-- Search Bar -->
      <searchBar/>
       <!-- Top banner of the tvshow -->

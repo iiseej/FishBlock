@@ -8,7 +8,8 @@
 
       <!-- Alphabetical list of tvshows -->
 
-    <searchBar/>
+      <searchBar/>
+      <div id="space-top"></div>
 
       <!-- Alphabetical list of tvshows -->
       <button @click="prevPage"type="button" name="button">previous page</button>
@@ -123,6 +124,10 @@ export default {
     height: auto;
     margin-left: 220px;
     justify-content: center;
+  }
+
+  #space-top {
+    height: 60px;
   }
 
   .shows-list-content {
