@@ -5,7 +5,7 @@
 
   <div  :searchQuery="query" class="search">
     <input @keyup="search" v-if="searchBarShow" type="text" name="" value="" v-model="query" placeholder="search shows or people">
-    <img @click="searchDone = true" @mouseover="searchBarShow = true"style="height:30px;width:auto;" src="~assets/searchIcon.png" alt="">
+    <img  @click="searchDone = false" @mouseover="searchBarShow = true"style="height:30px;width:auto;" src="~assets/searchIcon.png" alt="">
   </div>
 
 
@@ -14,7 +14,7 @@
 
   <!-- Results of search -->
 
-  <div id="resultsOfSearch">
+  <div v-if="searchDone = true" id="resultsOfSearch" >
     <li v-for="result in results" ><nuxt-link :to="'/show/' + result.id"><div style="height:5Opx;width:auto;">
       {{result.name}}
     </div></nuxt-link></li>
@@ -31,7 +31,7 @@ export default {
     results: [],
     query: '',
     searchBarShow: false,
-    searchDone: false
+    searchDone: true
   }),
   methods: {
     search: function () {
@@ -39,6 +39,7 @@ export default {
       .then(response => {
         // JSON responses are automatically parsed.
         this.results = response.data.results
+        this.results = this.results.splice(0, 5)
         console.log(this.results)
       })
       .catch(e => {
