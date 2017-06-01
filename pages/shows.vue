@@ -26,8 +26,8 @@
             <nuxt-link :to="'/show/' + movie.id">
               <div>
                <p id="shows-posters-title">{{movie.original_name}}</p>
-               <p id="shows-posters-genre">{{movie.vote_average}}</p>
-                <img  id="shows-posters-img" :src="'https://image.tmdb.org/t/p/w500/'+movie.poster_path" alt="">
+               <p id="shows-posters-vote"><img src="~assets/heart.png" id="shows-posters-vote-img"/>{{movie.vote_average}}</p>
+                <img  id="shows-posters-img" :src="'https://image.tmdb.org/t/p/w500/'+movie.poster_path" alt="tvshow poster">
               </div>
             </nuxt-link>
           </li>
@@ -199,20 +199,26 @@ export default {
     width: 180px;
     height: 58px;
     text-align: center;
+    color: rgba(255, 255, 255, 0.2);
   }
 
   #shows-posters-title[data-v-48e3a7d3]:hover {
-    background-color: #ff9941;
-    color: black;
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 800;
   }
 
-  #shows-posters-genre {
+  #shows-posters-vote {
     position: absolute;
     margin-top: 248px;
     font-size: 11px;
     width: 180px;
     text-align: center;
+    color: #ff9941;
+  }
+  
+  #shows-posters-vote-img {
+    width: 8px;
+    margin-right: 5px;
   }
 
   #shows-posters-img {
