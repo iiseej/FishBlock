@@ -202,7 +202,7 @@ export default {
     color: rgba(255, 255, 255, 0.2);
   }
 
-  #shows-posters-title[data-v-48e3a7d3]:hover {
+  #shows-posters-list:hover #shows-posters-title[data-v-48e3a7d3] {
     color: rgba(255, 255, 255, 0.9);
     font-weight: 800;
   }
