@@ -10,7 +10,7 @@
       <div class="testtest" v-if="!searchDone">
       <div class="backdrop-gradient">
         <div class="backdrop">
-          <img id="tvshow-backdrop" :src="'https://image.tmdb.org/t/p/original/'+movie.backdrop_path" alt="banner">
+          <img id="tvshow-backdrop" :src="'https://image.tmdb.org/t/p/w1280/'+movie.backdrop_path" alt="banner">
           <div class="tvshow-title">
             <p id="tvshow-title-text"><strong>{{movie.original_name}}</strong></p>
             <p id="tvshow-first-air-date"><strong>{{movie.first_air_date}}</strong></p>
@@ -45,7 +45,7 @@
             <li v-for="actor in cast" class="tvshow-actor-photo">
               <div id="tvshow-actor-photo-element">
 
-              <img @mouseover="setBio(actor), seen=false" @mouseleave="seen = true" id="tvshow-cast-poster" :src="'https://image.tmdb.org/t/p/original/'+actor.profile_path"/></div></li>
+              <img @mouseover="setBio(actor), seen=false" @mouseleave="seen = true" id="tvshow-cast-poster" :src="'https://image.tmdb.org/t/p/w185/'+actor.profile_path"/></div></li>
             <div>
               <li v-for="actor in cast" class="tvshow-actor-name">{{actor.name}}</li>
             </div>
