@@ -295,7 +295,7 @@ export default {
   }
 
   .content {
-    padding-top: 60px;
+    padding-top: 50px;
     flex: 1 1 auto;
     z-index: 0;
     background-color: #262835;

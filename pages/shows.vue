@@ -12,8 +12,8 @@
       <div id="space-top"></div>
 
       <!-- Alphabetical list of tvshows -->
-      <button @click="prevPage"type="button" name="button">previous page</button>
-      <button @click="nextPage"type="button" name="button">next page</button>
+      <button @click="prevPage"type="button" name="button" id="shows-previous-btn"></button>
+      <button @click="nextPage"type="button" name="button" id="shows-next-btn"></button>
 
       <div class="shows-list-content" >
         <p v-for="letter in alphabet" id="shows-list-text" >{{letter}}</p>
@@ -129,13 +129,43 @@ export default {
   #space-top {
     height: 60px;
   }
+  
+  #shows-previous-btn {
+    width: 18px;
+    height: 30px;
+    border: none;
+    outline: none;
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.0);
+    background-image: url('~assets/previous.png');
+    cursor: pointer;
+    position: fixed;
+    margin-top: 40vh;
+    margin-left: 20px;
+  }
+  
+  #shows-next-btn {
+    width: 18px;
+    height: 30px;
+    border: none;
+    outline: none;
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.0);
+    background-image: url('~assets/next.png');
+    cursor: pointer;
+    position: fixed;
+    right: 0px;
+    margin-top: 40vh;
+    margin-right: 20px;
+  }
 
   .shows-list-content {
-    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
     display: flex;
     justify-content: space-around;
     text-align: center;
-    margin-top: 50px;
   }
 
   .shows-posters-content {
@@ -144,6 +174,7 @@ export default {
 
   #shows-list-text {
     font-size: 20px;
+    cursor: pointer;
 
   }
   #shows-list-text:hover {
