@@ -18,7 +18,7 @@
             <p id="tvshow-number-seasons">{{movie.number_of_seasons}} seasons</p>
             <p id="tvshow-last-air-date">Last episode aired {{movie.last_air_date}}</p>
             <div>
-              <a href="route"><img src="~assets/FollowButton.png" id="tvshow-follow-btn"/></a>
+              <img style="curosr:pointer;" @click="followShow" src="~assets/FollowButton.png" id="tvshow-follow-btn"/>
             </div>
           </div>
         </div>
@@ -155,6 +155,26 @@ export default {
     'searchQuery'
   ],
   methods: {
+    followShow: function () {
+      axios({
+        method: 'put',
+        url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users/59300f38f36d2805427e6df7?apiKey=f-uDQagLij0gzft6G5473mVMsawV6Yy7',
+        data: {
+          '$push': {followedTvShows: this.$route.params.id}
+        }
+      })
+    },
+    searchMongo: function () {
+      axios({
+        method: 'get',
+        url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users/59300f38f36d2805427e6df7?apiKey=f-uDQagLij0gzft6G5473mVMsawV6Yy7',
+        data: {
+          '$elemMatch': {followedTvShows: this.$route.params.id}
+        }
+      }).then(response => {
+        console.log(response)
+      })
+    },
     showEpisodesFn: function (event) {
       console.log(event.targetVM)
     },
