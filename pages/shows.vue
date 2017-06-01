@@ -26,8 +26,8 @@
             <nuxt-link :to="'/show/' + movie.id">
               <div>
                <p id="shows-posters-title">{{movie.original_name}}</p>
-               <p id="shows-posters-genre">genre</p>
-                <img id="shows-posters-img" :src="'https://image.tmdb.org/t/p/w500/'+movie.poster_path" alt="">
+               <p id="shows-posters-genre">{{movie.vote_average}}</p>
+                <img  id="shows-posters-img" :src="'https://image.tmdb.org/t/p/w500/'+movie.poster_path" alt="">
               </div>
             </nuxt-link>
           </li>
