@@ -4,7 +4,7 @@
     <Affix/>
 
     <div class="content">
-
+      <!-- Search Bar -->
      <searchBar/>
       <!-- Top banner of the tvshow -->
       <div class="testtest" v-if="!searchDone">
@@ -18,7 +18,7 @@
             <p id="tvshow-number-seasons">{{movie.number_of_seasons}} seasons</p>
             <p id="tvshow-last-air-date">Last episode aired {{movie.last_air_date}}</p>
             <div>
-              <a href="route"><img src="~assets/FollowButton.png" id="tvshow-follow-btn"/></a>
+              <img style="curosr:pointer;" @click="followShow" src="~assets/FollowButton.png" id="tvshow-follow-btn"/>
             </div>
           </div>
         </div>
@@ -54,7 +54,7 @@
       </div>
 
       <!-- Details of episodes and seasons -->
-      <div @click="showEpisodesFn" class="seasons-gradient">
+      <div @click="showEpisodesFn, showEpisodes = true" @mouseleave="showEpisodes = false" class="seasons-gradient">
         <div  class="tvshow-seasons-episodes">
           <ul>
             <li  id="tvshow-season-list" v-for="(season, index) in movie.seasons">
@@ -121,6 +121,7 @@
 import axios from 'axios'
 import Affix from '~components/Affix.vue'
 import searchBar from '~components/searchBar.vue'
+
 export default {
   data: () => ({
     img_path: 'https://image.tmdb.org/t/p/w500/',
@@ -144,7 +145,7 @@ export default {
     actorBio: '',
     seasonPoster: '',
     seasonEpisodesNumber: 0,
-    showEpisodes: true,
+    showEpisodes: false,
     results: [],
     query: '',
     searchBarShow: false,
@@ -154,6 +155,26 @@ export default {
     'searchQuery'
   ],
   methods: {
+    followShow: function () {
+      axios({
+        method: 'put',
+        url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users/59300f38f36d2805427e6df7?apiKey=f-uDQagLij0gzft6G5473mVMsawV6Yy7',
+        data: {
+          '$push': {followedTvShows: this.$route.params.id}
+        }
+      })
+    },
+    searchMongo: function () {
+      axios({
+        method: 'get',
+        url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users/59300f38f36d2805427e6df7?apiKey=f-uDQagLij0gzft6G5473mVMsawV6Yy7',
+        data: {
+          '$elemMatch': {followedTvShows: this.$route.params.id}
+        }
+      }).then(response => {
+        console.log(response)
+      })
+    },
     showEpisodesFn: function (event) {
       console.log(event.targetVM)
     },
@@ -190,17 +211,6 @@ export default {
       .then(response => {
         // JSON responses are automatically parsed.
         this.seasonEpisodesNumber = response.data.episodes.length
-      })
-      .catch(e => {
-        this.errors.push(e)
-      })
-    },
-    search: function () {
-      axios.get('https://api.themoviedb.org/3/search/tv?api_key=' + this.apiKey + '&language=en-US&query=' + this.query + '&page=1')
-      .then(response => {
-        // JSON responses are automatically parsed.
-        this.results = response.data.results
-        console.log(this.results)
       })
       .catch(e => {
         this.errors.push(e)
@@ -305,7 +315,7 @@ export default {
   }
 
   .content {
-    padding-top: 60px;
+    padding-top: 50px;
     flex: 1 1 auto;
     z-index: 0;
     background-color: #262835;
@@ -464,6 +474,7 @@ export default {
   #tvshow-cast-poster {
     width: 130px;
     height: auto;
+    cursor:zoom-in;
   }
 
   .tvshow-actor-name {
@@ -496,6 +507,7 @@ export default {
     position: relative;
     display: inline-block;
     vertical-align: top;
+    cursor:pointer;
   }
 
   .tvshow-seasons-episodes {

@@ -2,7 +2,11 @@
   <div class="container">
     <Affix/>
     <div class="home-content">
+
       <h1>{{msg}}</h1>
+      <button @click="getCollections" type="button" name="button">get collection</button>
+      <button @click="getDocuments" type="button" name="button">get documents</button>
+
     </div>
 </div>
 
@@ -10,14 +14,39 @@
 
 <script>
 import Affix from '~components/Affix.vue'
+import axios from 'axios'
 export default {
   data () {
     return {
-      msg: 'votre plus beau profil'
+      msg: 'votre plus beau profil',
+      request: 'https://api.mlab.com/api/1/',
+      apiKey: 'f-uDQagLij0gzft6G5473mVMsawV6Yy7'
     }
   },
   components: {
     Affix
+  },
+  methods: {
+    getCollections: function () {
+      axios.get('https://api.mlab.com/api/1/databases/fishblock/collections?apiKey=' + this.apiKey)
+      .then(response => {
+        // JSON responses are automatically parsed.
+        console.log(response.data)
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    },
+    getDocuments: function () {
+      axios.get('https://api.mlab.com/api/1/databases/fishblock/collections/Users?apiKey=' + this.apiKey)
+      .then(response => {
+        // JSON responses are automatically parsed.
+        console.log(response.data)
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    }
   }
 
 }
