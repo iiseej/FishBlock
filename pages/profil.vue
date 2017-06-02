@@ -189,7 +189,7 @@
     height: auto;
     margin-left: 10px;
   }
-  
+
   .profil-details-write {
     display: inline-block;
   }
@@ -203,7 +203,7 @@
     color: #4D4C4C;
     margin-left: 10px;
   }
-  
+
   .profil-details-activity {
     margin: 20px 20px 0px 20px;
     padding: 30px 35px 0px 30px;
