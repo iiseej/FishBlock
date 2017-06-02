@@ -84,33 +84,8 @@
       </div>
 
       <!-- Critics of tvshow -->
-            <div class="tvshow-critics">
-              <div id="tvshow-critics-text">
-                <img src="~assets/critics.png" id="tvshow-critics-icon"/> Critics
-              </div>
-              <div class="tvshow-critics-element">
-                <div>
-                  <p id="tvshow-critics-show-name">Lost</p>
-                  <p id="tvshow-critics-by">By</p>
-                  <a href="route">
-                    <p id="tvshow-critics-user-name"> Sophie</p>
-                  </a>
-                  </div>
-                <div id="tvshow-critics-rating"><p id="tvshow-critics-rating-text">7/10</p></div>
-                <p>« Lost  is simply one of the best show there has ever been on television.
-      Gripping stories, intriguing mysteries and compelling characters, and all of this is summed up with one of the best technical compartment that television has ever seen. Great writing, great directing and excellent editing, this and the astonishing level of the cast, is what makes Lost a piece of History....  »</p>
-                <div id="tvshow-critics-likes">
-                  <a href="route">
-                    <img src="~assets/like.png" class="tvshow-critics-likes-icon"/>
-                  </a>
-                  <p class="tvshow-critics-likes-text">42</p>
-                  <a href="route">
-                    <img src="~assets/dislike.png" class="tvshow-critics-likes-icon"/>
-                  </a>
-                  <p class="tvshow-critics-likes-text">6</p>
-                </div>
-              </div>
-      </div>      </div>
+      <Critics/>
+    </div>
     </div>
   </div>
 </template>
@@ -121,6 +96,7 @@
 import axios from 'axios'
 import Affix from '~components/Affix.vue'
 import searchBar from '~components/searchBar.vue'
+import Critics from '~components/Critics.vue'
 
 export default {
   data: () => ({
@@ -230,7 +206,8 @@ export default {
   },
   components: {
     Affix,
-    searchBar
+    searchBar,
+    Critics
   },
   watch: {
     '$route' (to, from) {
