@@ -15,6 +15,10 @@
         <p id="profil-details-age">24</p>
         <img src="~assets/pen.png" alt="Update user informations" class="profil-details-update"/>
       </div>
+
+      <button @click="getCollections" type="button" name="button">get collection</button>
+      <button @click="getDocuments" type="button" name="button">get documents</button>
+
     </div>
      
     <!-- Recent activity --> 
@@ -64,14 +68,41 @@
   import searchBar from '~components/searchBar.vue'
   import axios from 'axios'
   export default {
-    data: () => ({
-      img_path: 'https://image.tmdb.org/t/p/w500/',
-      movies: [],
-      errors: []
-    }),
+    data () {
+      return {
+        msg: 'votre plus beau profil',
+        request: 'https://api.mlab.com/api/1/',
+        apiKey: 'f-uDQagLij0gzft6G5473mVMsawV6Yy7',
+        img_path: 'https://image.tmdb.org/t/p/w500/',
+        movies: [],
+        errors: []
+      }
+    },
     components: {
       Affix,
       searchBar
+    },
+    methods: {
+      getCollections: function () {
+        axios.get('https://api.mlab.com/api/1/databases/fishblock/collections?apiKey=' + this.apiKey)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          console.log(response.data)
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
+      },
+      getDocuments: function () {
+        axios.get('https://api.mlab.com/api/1/databases/fishblock/collections/Users?apiKey=' + this.apiKey)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          console.log(response.data)
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
+      }
     },
     // Fetches posts when the component is created.
     created () {
