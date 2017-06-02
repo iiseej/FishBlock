@@ -18,7 +18,7 @@
             <p id="tvshow-number-seasons">{{movie.number_of_seasons}} seasons</p>
             <p id="tvshow-last-air-date">Last episode aired {{movie.last_air_date}}</p>
             <div>
-              <img style="curosr:pointer;" @click="followShow" src="~assets/FollowButton.png" id="tvshow-follow-btn"/>
+              <img style="curosr:pointer;" @click="unFollowShow" :src="followPath" id="tvshow-follow-btn"/>
             </div>
           </div>
         </div>
@@ -149,13 +149,15 @@ export default {
     results: [],
     query: '',
     searchBarShow: false,
-    searchDone: false
+    searchDone: false,
+    followPath: '/FollowButton.png'
   }),
   props: [
     'searchQuery'
   ],
   methods: {
     followShow: function () {
+      this.followPath = '/FollowedButton.png'
       axios({
         method: 'put',
         url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users/59300f38f36d2805427e6df7?apiKey=f-uDQagLij0gzft6G5473mVMsawV6Yy7',
@@ -164,15 +166,24 @@ export default {
         }
       })
     },
+    unFollowShow: function () {
+      this.followPath = '/FollowButton.png'
+      axios({
+        method: 'put',
+        url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users/59300f38f36d2805427e6df7?apiKey=f-uDQagLij0gzft6G5473mVMsawV6Yy7',
+        data: {
+          '$remove': {followedTvShows: this.$route.params.id}
+        }
+      })
+    },
     searchMongo: function () {
       axios({
         method: 'get',
-        url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users/59300f38f36d2805427e6df7?apiKey=f-uDQagLij0gzft6G5473mVMsawV6Yy7',
-        data: {
-          '$elemMatch': {followedTvShows: this.$route.params.id}
-        }
+        url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users?q={"followedTvShows": "' + this.$route.params.id + '"}&apiKey=f-uDQagLij0gzft6G5473mVMsawV6Yy7'
       }).then(response => {
-        console.log(response)
+        if (response.data.length === 0) {
+          console.log('show is not followed')
+        }console.log(response.data)
       })
     },
     showEpisodesFn: function (event) {
@@ -256,6 +267,15 @@ export default {
   },
   // Fetches posts when the component is created.
   created () {
+    axios({
+      method: 'get',
+      url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users?q={"followedTvShows": "' + this.$route.params.id + '"}&apiKey=f-uDQagLij0gzft6G5473mVMsawV6Yy7'
+    }).then(response => {
+      if (response.data.length !== 0) {
+        this.followPath = '/FollowedButton.png'
+        console.log('show is not followed')
+      }console.log(response.data)
+    })
     // datas of the global tvshow
     axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '?api_key=' + this.apiKey + '&language=en-US')
     .then(response => {
