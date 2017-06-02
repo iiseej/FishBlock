@@ -66,7 +66,7 @@
               <input type="text" name="" value="" placeholder="" id="profil-update-form-input"/>
               <p class="profil-update-form-text">new age</p>
               <input type="text" name="" value="" placeholder="" id="profil-update-form-input"/>
-              <button id="profil-update-form-btn" @click="userNameChange = !userNameChange ">ok</button>
+              <button id="profil-update-form-btn" @click="changeNickname(), userNameChange = !userNameChange">ok</button>
             </div>
           </div>
     </div>
@@ -106,11 +106,18 @@
       },
       changeNickname: function () {
         axios({
-          method: 'get',
+          method: 'put',
           url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users?q={"name": "' + this.profilName + '"}&apiKey=' + this.apiKeyMongo,
           data: {
-             '$set': {'name':newNickname}
+            '$set': {name: this.newNickname}
           }
+        }).then(response => {
+          console.log(response)
+          this.profilName = response.data[0].name
+        })
+        axios({
+          method: 'get',
+          url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users?&apiKey=' + this.apiKeyMongo
         }).then(response => {
           this.profilName = response.data[0].name
         })

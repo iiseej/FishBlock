@@ -22,9 +22,6 @@ module.exports = {
     })
   }
 },
-  modules: [
-    '@nuxtjs/auth'
-  ],
   /*
   ** Customize the progress-bar color
   */
