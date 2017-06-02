@@ -11,9 +11,9 @@
       <img src="~assets/profilPicture.jpg" alt="Profil Picture" class="rounded-picture"/>
       <p id="profil-details-text">Update picture</p>
       <div id="profil-details-elements">
+        <img @click="userNameChange = !userNameChange " src="~assets/pen.png" alt="Update user informations" class="profil-details-update"/>
         <p id="profil-details-name" v-model="profilName"> {{profilName}},</p>
         <p id="profil-details-age">24</p>
-        <img @click="userNameChange = !userNameChange " src="~assets/pen.png" alt="Update user informations" class="profil-details-update"/>
       </div>
 
     </div>
@@ -58,15 +58,22 @@
             </div>
 
           </div>
-          <!-- update profil -->
-          <div  class="profil-update-content">
+          <!-- update name -->
+          <div  v-if="userNameChange" class="profil-update-content">
             <div class="profil-update-form">
               <img @click="userNameChange = !userNameChange " src="~assets/updateClose.png" id="profil-update-form-icon"/>
               <p class="profil-update-form-text">new pseudo</p>
-              <input type="text" name="" value="" placeholder="" id="profil-update-form-input"/>
+              <input type="text" name="" value="" placeholder="" id="profil-update-form-input" v-model="newNickname"/>
+              <button id="profil-update-form-btn" @click="setNewNickname(), userNameChange = !userNameChange">ok</button>
+            </div>
+          </div>
+          <!-- update age -->
+          <div  v-if="userAgeChange" class="profil-update-content">
+            <div class="profil-update-form">
+              <img @click="userAgeChange = !userAgeChange " src="~assets/updateClose.png" id="profil-update-form-icon"/>
               <p class="profil-update-form-text">new age</p>
               <input type="text" name="" value="" placeholder="" id="profil-update-form-input"/>
-              <button id="profil-update-form-btn" @click="changeNickname(), userNameChange = !userNameChange">ok</button>
+              <button id="profil-update-form-btn" @click="setNewAge(), userAgeChange = !userAgeChange">ok</button>
             </div>
           </div>
     </div>
@@ -93,7 +100,8 @@
         showsFollowed: [],
         userNameChange: false,
         profilName: '',
-        newNickname: ''
+        newNickname: 'type here',
+        profilAge: ''
       }
     },
     components: {
@@ -102,19 +110,21 @@
     },
     methods: {
       setNewNickname: function () {
-        this.newNickname = 'toto'
+        this.changeNickname() + this.updateNickname()
       },
       changeNickname: function () {
         axios({
           method: 'put',
           url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users?q={"name": "' + this.profilName + '"}&apiKey=' + this.apiKeyMongo,
           data: {
-            '$set': {name: this.newNickname}
+            '$set': {'name': this.newNickname}
           }
         }).then(response => {
           console.log(response)
           this.profilName = response.data[0].name
         })
+      },
+      updateNickname: function () {
         axios({
           method: 'get',
           url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users?&apiKey=' + this.apiKeyMongo
@@ -122,6 +132,30 @@
           this.profilName = response.data[0].name
         })
       }
+    },
+    // change date of birth later
+    setNewAge: function () {
+      this.changeAge() + this.updateAge()
+    },
+    changeAge: function () {
+      axios({
+        method: 'put',
+        url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users?q={"name": "' + this.profilName + '"}&apiKey=' + this.apiKeyMongo,
+        data: {
+          '$set': {'age': this.newNickname}
+        }
+      }).then(response => {
+        console.log(response)
+        this.profilName = response.data[0].name
+      })
+    },
+    updateAge: function () {
+      axios({
+        method: 'get',
+        url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users?&apiKey=' + this.apiKeyMongo
+      }).then(response => {
+        this.profilAge = response.data[0].age
+      })
     },
     // Fetches posts when the component is created.
     created () {
@@ -234,7 +268,8 @@
   .profil-details-update {
     width: 10px;
     height: auto;
-    margin-left: 10px;
+    margin-right: 10px;
+    cursor: pointer;
   }
 
   .profil-details-write {
@@ -384,7 +419,7 @@
 
   .profil-update-form {
     width: 330px;
-    height: 180px;
+    height: 120px;
     background-color: #161C28;
     margin-left: auto;
     margin-right: auto;
