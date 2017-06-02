@@ -62,16 +62,17 @@
   }
 
   #search-bar-input {
-    right: 280px;
-    position: absolute;
-    width: 180px;
-    height: 20px;
-    margin-top: 14px;
-    border-radius: 15px;
-    border-style: hidden;
-    background-color: #e9e9e9;
-    color: black;
-  }
+      right: 280px;
+      position: absolute;
+      width: 180px;
+      height: 20px;
+      margin-top: 14px;
+      border-radius: 15px;
+      border-style: hidden;
+      background-color: #e9e9e9;
+      color: black;
+      padding-left: 15px;
+    }
 
   #search-bar-img {
     height: 25px;
