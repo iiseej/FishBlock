@@ -18,7 +18,7 @@
             <p id="tvshow-number-seasons">{{movie.number_of_seasons}} seasons</p>
             <p id="tvshow-last-air-date">Last episode aired {{movie.last_air_date}}</p>
             <div>
-              <img style="curosr:pointer;" @click="unFollowShow" :src="followPath" id="tvshow-follow-btn"/>
+              <img style="curosr:pointer;" @click="followShow" :src="followPath" id="tvshow-follow-btn"/>
             </div>
           </div>
         </div>
