@@ -13,7 +13,7 @@
       <div id="profil-details-elements">
         <p id="profil-details-name">Klaus ,</p>
         <p id="profil-details-age">24</p>
-        <img src="~assets/pen.png" alt="Update user informations" class="profil-details-update"/>
+        <img @click="userNameChange = !userNameChange " src="~assets/pen.png" alt="Update user informations" class="profil-details-update"/>
       </div>
 
     </div>
@@ -46,19 +46,29 @@
 
             <div class="profil-details-favorites-gradient">
               <li v-for="movie in movies" class="profil-details-favorites-list">
+                <nuxt-link :to="'/show/' + movie.id">
                 <div class="profil-details-favorites-one">
                   <img :src="img_path + movie.backdrop_path" class="profil-details-favorites-img"/>
                   <div class="home-last-tvshows-background"></div>
-                  <nuxt-link :to="'/show/' + movie.id">
                     <p class="profil-details-favorites-name">{{movie.name}}</p>
-                    <p class="profil-details-favorites-vote"><img src="~assets/heart.png" id="shows-posters-vote-img"/>{{movie.vote_average}}</p>
-                  </nuxt-link>
+                    <p class="profil-details-favorites-vote"><img src="~assets/heart.png" id="shows-posters-vote-img"/>{{movie.vote_average}}</p>                
                 </div>
+                </nuxt-link>
               </li>
             </div>
 
           </div>
-
+          <!-- update profil -->
+          <div v-if="userNameChange" class="profil-update-content">
+            <div class="profil-update-form">
+              <img @click="userNameChange = !userNameChange " src="~assets/updateClose.png" id="profil-update-form-icon"/>
+              <p class="profil-update-form-text">new pseudo</p>
+              <input type="text" name="" value="" placeholder="" id="profil-update-form-input"/>
+              <p class="profil-update-form-text">new age</p>
+              <input type="text" name="" value="" placeholder="" id="profil-update-form-input"/>
+              <button id="profil-update-form-btn">ok</button>
+            </div>
+          </div>
     </div>
 
   </div>
@@ -80,7 +90,8 @@
         img_path: 'https://image.tmdb.org/t/p/w780/',
         movies: [],
         errors: [],
-        showsFollowed: []
+        showsFollowed: [],
+        userNameChange: false
       }
     },
     components: {
@@ -221,12 +232,12 @@
   .profil-details-write {
     display: inline-block;
   }
-  
+
   #profil-details-write-img {
     width: 12px;
     margin-right: 10px;
   }
-  
+
   #profil-details-write-text {
     color: #4D4C4C;
     margin-left: 10px;
@@ -351,5 +362,70 @@
   #shows-posters-vote-img {
     width: 8px;
     margin-right: 5px;
+  }
+  .profil-update-content {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    background-color: rgba(37, 40, 52, 0.6);
+    padding-right: 220px;
+    z-index: 1000;
+    display: block; /* à changer en block au clique sur le crayon */
+  }
+
+  .profil-update-form {
+    width: 330px;
+    height: 180px;
+    background-color: #161C28;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50vh;
+    transform: translateY(-50%);
+  }
+
+  #profil-update-form-icon {
+    width: 12px;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: -15px;
+    cursor: pointer;
+  }
+
+  .profil-update-form-text {
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  #profil-update-form-input {
+    background-color: #3e434c;
+    width: 170px;
+    height: 25px;
+    border-radius: 30px;
+    border: none;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    font-weight: 800;
+    color: white;
+    padding-left: 15px;
+  }
+
+  #profil-update-form-btn {
+    background-color: #10B37A;
+    width: 25px;
+    height: 25px;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    color: white;
+    font-weight: 800;
+    margin-left: 285px;
+    font-size: 12px;
+    cursor: pointer;
   }
 </style>
