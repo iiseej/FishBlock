@@ -44,15 +44,18 @@
           <!-- Favorites tvshows -->   
           <div class="profil-details-favorites-element">
 
-            <!-- <div class="profil-details-favorites-gradient">
-              <li v-for="movie in movies" class="home-last-tvshows-list">
-                <div class="home-last-tvshows-element">
-                  <img :src="img_path + movie.backdrop_path" class="home-last-tvshows-img"/>
+            <div class="profil-details-favorites-gradient">
+              <li v-for="movie in movies" class="profil-details-favorites-list">
+                <div class="profil-details-favorites-one">
+                  <img :src="img_path + movie.backdrop_path" class="profil-details-favorites-img"/>
                   <div class="home-last-tvshows-background"></div>
-                  <nuxt-link :to="'/show/' + movie.id"><p class="home-last-tvshows-name">{{movie.name}}</p></nuxt-link>
+                  <nuxt-link :to="'/show/' + movie.id">
+                    <p class="profil-details-favorites-name">{{movie.name}}</p>
+                    <p class="profil-details-favorites-vote"><img src="~assets/heart.png" id="shows-posters-vote-img"/>{{movie.vote_average}}</p>
+                  </nuxt-link>
                 </div>
               </li>
-            </div>--> 
+            </div>
             
           </div>
       
@@ -73,7 +76,7 @@
         msg: 'votre plus beau profil',
         request: 'https://api.mlab.com/api/1/',
         apiKey: 'f-uDQagLij0gzft6G5473mVMsawV6Yy7',
-        img_path: 'https://image.tmdb.org/t/p/w500/',
+        img_path: 'https://image.tmdb.org/t/p/w780/',
         movies: [],
         errors: []
       }
@@ -112,7 +115,7 @@
         // this.movie = response.data
         console.log(response.data.results[0])
         this.movies = response.data.results
-        this.movies = this.movies.splice(0, 4)
+        this.movies = this.movies.splice(0, 3)
       })
       .catch(e => {
         this.errors.push(e)
@@ -235,7 +238,9 @@
     width: 64%;
     height: 255px;
     display: inline-block;
-    background-color: blueviolet;
+    overflow: hidden;
+    position: relative;
+    z-index: 100;
   }
   
   .profil-details-favorites-title {
@@ -258,9 +263,50 @@
   }
   
   .profil-details-favorites-gradient {
-    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 100%);
     position: relative;
-    width: 40%;
-    margin-left: -50px;
+    width: 100%;
+    height: 255px;
+  }
+  
+  .profil-details-favorites-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 33.33%;
+    display: inline-block;
+    position: relative;
+  }
+  
+  .profil-details-favorites-one {
+    overflow: hidden;
+    margin-top: -20px;
+  }
+  
+  .profil-details-favorites-img {
+    margin-left: -40%;
+    height: 280px;
+    position: relative;
+    z-index: -10;
+  }
+  
+  .profil-details-favorites-name {
+    margin-top: -70px;
+    margin-bottom: 60px;
+    text-align: center;
+  }
+  
+  .profil-details-favorites-vote {
+    margin-top: -50px;
+    margin-bottom: 50px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 400;
+    color: #ff9941
+  }
+  
+  #shows-posters-vote-img {
+    width: 8px;
+    margin-right: 5px;
   }
 </style>
