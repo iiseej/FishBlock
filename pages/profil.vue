@@ -11,7 +11,7 @@
       <img src="~assets/profilPicture.jpg" alt="Profil Picture" class="rounded-picture"/>
       <p id="profil-details-text">Update picture</p>
       <div id="profil-details-elements">
-        <p id="profil-details-name">Klaus ,</p>
+        <p id="profil-details-name" v-model="profilName"> {{profilName}},</p>
         <p id="profil-details-age">24</p>
         <img @click="userNameChange = !userNameChange " src="~assets/pen.png" alt="Update user informations" class="profil-details-update"/>
       </div>
@@ -51,7 +51,7 @@
                   <img :src="img_path + movie.backdrop_path" class="profil-details-favorites-img"/>
                   <div class="home-last-tvshows-background"></div>
                     <p class="profil-details-favorites-name">{{movie.name}}</p>
-                    <p class="profil-details-favorites-vote"><img src="~assets/heart.png" id="shows-posters-vote-img"/>{{movie.vote_average}}</p>                
+                    <p class="profil-details-favorites-vote"><img src="~assets/heart.png" id="shows-posters-vote-img"/>{{movie.vote_average}}</p>
                 </div>
                 </nuxt-link>
               </li>
@@ -59,14 +59,14 @@
 
           </div>
           <!-- update profil -->
-          <div v-if="userNameChange" class="profil-update-content">
+          <div  class="profil-update-content">
             <div class="profil-update-form">
               <img @click="userNameChange = !userNameChange " src="~assets/updateClose.png" id="profil-update-form-icon"/>
               <p class="profil-update-form-text">new pseudo</p>
               <input type="text" name="" value="" placeholder="" id="profil-update-form-input"/>
               <p class="profil-update-form-text">new age</p>
               <input type="text" name="" value="" placeholder="" id="profil-update-form-input"/>
-              <button id="profil-update-form-btn">ok</button>
+              <button id="profil-update-form-btn" @click="userNameChange = !userNameChange ">ok</button>
             </div>
           </div>
     </div>
@@ -91,7 +91,9 @@
         movies: [],
         errors: [],
         showsFollowed: [],
-        userNameChange: false
+        userNameChange: false,
+        profilName: '',
+        newNickname: ''
       }
     },
     components: {
@@ -99,24 +101,18 @@
       searchBar
     },
     methods: {
-      getCollections: function () {
-        axios.get('https://api.mlab.com/api/1/databases/fishblock/collections?apiKey=' + this.apiKeyMongo)
-        .then(response => {
-          // JSON responses are automatically parsed.
-          console.log(response.data)
-        })
-        .catch(e => {
-          this.errors.push(e)
-        })
+      setNewNickname: function () {
+        this.newNickname = 'toto'
       },
-      getDocuments: function () {
-        axios.get('https://api.mlab.com/api/1/databases/fishblock/collections/Users?apiKey=' + this.apiKeyMongo)
-        .then(response => {
-          // JSON responses are automatically parsed.
-          console.log(response.data)
-        })
-        .catch(e => {
-          this.errors.push(e)
+      changeNickname: function () {
+        axios({
+          method: 'get',
+          url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users?q={"name": "' + this.profilName + '"}&apiKey=' + this.apiKeyMongo,
+          data: {
+             '$set': {'name':newNickname}
+          }
+        }).then(response => {
+          this.profilName = response.data[0].name
         })
       }
     },
@@ -124,13 +120,18 @@
     created () {
       axios({
         method: 'get',
+        url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users?&apiKey=' + this.apiKeyMongo
+      }).then(response => {
+        this.profilName = response.data[0].name
+      })
+      axios({
+        method: 'get',
         url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users/59300f38f36d2805427e6df7?apiKey=f-uDQagLij0gzft6G5473mVMsawV6Yy7'
       }).then(response => {
         if (response.data.length === 0) {
-          console.log('show is not followed')
+          return
         } this.showsFollowed = response.data.followedTvShows
         this.showsFollowed = this.showsFollowed.splice(0, 3)
-        console.log(this.showsFollowed[0])
         axios.get('https://api.themoviedb.org/3/tv/' + this.showsFollowed[0] + '?api_key=' + this.apiKeyTvdb + '&language=en-US')
         .then(response => {
           // JSON responses are automatically parsed.
