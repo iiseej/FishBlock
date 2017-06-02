@@ -16,9 +16,9 @@
         <img src="~assets/pen.png" alt="Update user informations" class="profil-details-update"/>
       </div>
 
-      <button @click="getCollections" type="button" name="button">get collection</button>
-      <button @click="getDocuments" type="button" name="button">get documents</button>
-
+    </div>
+    <div class="profil-details-write">
+      <p id="profil-details-write-text"><img src="~assets/writeTo.png" alt="Write to this user" id="profil-details-write-img"/>Write a message to user.pseudo</p>
     </div>
      
     <!-- Recent activity --> 
@@ -148,6 +148,7 @@
     min-width: 200px;
     margin-top: 30px;
     margin-left: 30px;
+    display: inline-block;
   }
   
   .rounded-picture {
@@ -186,6 +187,20 @@
   .profil-details-update {
     width: 10px;
     height: auto;
+    margin-left: 10px;
+  }
+  
+  .profil-details-write {
+    display: inline-block;
+  }
+  
+  #profil-details-write-img {
+    width: 12px;
+    margin-right: 10px;
+  }
+  
+  #profil-details-write-text {
+    color: #4D4C4C;
     margin-left: 10px;
   }
   
