@@ -42,15 +42,15 @@ export default {
       {
         name: 'Shows',
         path: '/orangeIcons/'
-      },
-      {
-        name: 'Messages',
-        path: '/orangeIcons/'
-      },
-      {
-        name: 'Settings',
-        path: '/orangeIcons/'
       }
+      // {
+      //   name: 'Messages',
+      //   path: '/orangeIcons/'
+      // },
+      // {
+      //   name: 'Settings',
+      //   path: '/orangeIcons/'
+      // }
       ]
     }
   },
@@ -188,9 +188,9 @@ li {
 }
 
 #nav-bar-ajust {
-  margin-bottom: 150px;  
-}  
-  
+  margin-bottom: 150px;
+}
+
 #nav-bar-middle {
   margin-bottom: 50%;
   margin-top: 50%;
