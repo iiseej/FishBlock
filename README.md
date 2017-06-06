@@ -5,16 +5,6 @@
 ## Build Setup
 
 
-
-``` bash
-#flavien
-
-<<<<<<< HEAD
-#test
-=======
-#Just a try for github +1
->>>>>>> master
-
 # install vue-cli
 If vue-cli is not installed, please install it with npm install -g vue-cli
 
