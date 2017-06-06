@@ -208,10 +208,10 @@ export default {
       method: 'get',
       url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Shows?apiKey=' + this.apiKeyMongo
     }).then(response => {
-      this.critics2 = response.data[0].critics[0]
-      this.criticUser2 = response.data[0].critics[1].user
-      this.criticText2 = response.data[0].critics[1].review
-      this.showNote2 = response.data[0].critics[1].note
+      this.critics2 = response.data[0].critics[2]
+      this.criticUser2 = response.data[0].critics[2].user
+      this.criticText2 = response.data[0].critics[2].review
+      this.showNote2 = response.data[0].critics[2].note
       this.showName2 = response.data[0].name
     })
   }
@@ -578,7 +578,6 @@ export default {
   height: 240px;
   margin-right: -55px;
   float: right;
-  margin-top: 2px;
 }
 
 .home-last-tvshows-critics-element {
@@ -608,7 +607,7 @@ export default {
 
 .pouet {
   margin-top: -118px;
-  margin-bottom: 20px;
+  margin-bottom: 9px;
   padding-left: 20px;
   padding-top: 10px;
 }
@@ -624,7 +623,6 @@ export default {
   margin-top: 10px;
   height: 50px;
   overflow-y: scroll;
-  white-space: pre-wrap;
 }
 
 .home-last-tvshows-critics-showname {
@@ -644,6 +642,7 @@ export default {
 
 .home-last-tvshows-critics-critic {
   font-weight: 400;
+  padding-right: 5px;
 }
 
 ::-webkit-scrollbar {
