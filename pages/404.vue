@@ -1,28 +1,58 @@
 <template lang="html">
-  <div id="content">
-    <h1>404 : page not found !</h1>
-    <h2>Bring me back in my Popcorn fish bowl :)</h2>
-    <img src="~assets/klaus-american-dad-zombie.jpg" alt="klaus zombie">
+  <div class="container">
+    <Affix/>
+    <div id="content">
+      <img src="~assets/klausZombie.png" alt="klaus zombie" id="klaus-img">
+      <h1>404 : page not found !</h1>
+      <h2>Bring me back in my Popcorn fish bowl :)</h2>
+    </div>
   </div>
 </template>
 
+
+<!-- Scripts -->
 <script>
-export default {
-}
+  import Affix from '~components/Affix.vue'
+  export default {
+    components: {
+      Affix
+    }
+  }
 </script>
 
-<style lang="css">
-body {
-  background-color: #262835;
-}
 
-#content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-h1, h2 {
-  color: #ff9941;
-}
+<!-- CSS in order of apparition -->
+<style lang="css">
+  body {
+    background-color: #262835;
+  }
+  
+  .container {
+    height: auto;
+  }
+
+  #content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: auto;
+    margin-left: 220px; 
+  }
+  
+  #klaus-img {
+    margin-top: 10%;
+    width: 400px;
+    margin-bottom: 30px;
+  }
+
+  h1 {
+    color: #ff9941;
+  } 
+  
+  h2 {
+    color: #ff9941;
+    font-weight: 400;
+    font-size: 14px;
+  }
 </style>

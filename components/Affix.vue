@@ -111,12 +111,6 @@ li {
   padding-left: 45px;
 }
 
-h1{
-  color:red;
-}
-
-
-
 #nav-bar {
   width: 220px;
   height: 100%;
@@ -256,14 +250,6 @@ h1{
 #btn-logout:hover .p-light{
   color: black;
   font-weight: 800;
-}
-
-
-#content {
-  flex: 1 1 auto;
-  background-color: #262835;
-  height: 2000px;
-  margin-left: 220px
 }
 
 </style>
