@@ -52,7 +52,6 @@
       },
       prevCritic: function () {
         if (this.index === 0) {
-          console.log('no previous critics')
           return
         } this.index--
         axios({
@@ -67,7 +66,6 @@
         })
       },
       nextCritic: function () {
-        console.log('next critic')
         this.index++
         axios({
           method: 'get',
