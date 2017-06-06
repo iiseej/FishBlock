@@ -18,7 +18,7 @@
             <p id="tvshow-number-seasons">{{movie.number_of_seasons}} seasons</p>
             <p id="tvshow-last-air-date">Last episode aired {{movie.last_air_date}}</p>
             <div>
-              <img style="curosr:pointer;" @click="followShow" :src="followPath" id="tvshow-follow-btn"/>
+              <img @click="followShow" :src="followPath" id="tvshow-follow-btn"/>
             </div>
           </div>
         </div>
@@ -45,7 +45,7 @@
             <li v-for="actor in cast" class="tvshow-actor-photo">
               <div id="tvshow-actor-photo-element">
 
-              <img @mouseover="setBio(actor), seen=false" @mouseleave="seen = true" id="tvshow-cast-poster" :src="'https://image.tmdb.org/t/p/original/'+actor.profile_path"/></div></li>
+              <img @mouseover="setBio(actor), seen=false" @mouseleave="seen = true" id="tvshow-cast-poster" :title="actor.name" :alt="actor.name" :src="'https://image.tmdb.org/t/p/original/'+actor.profile_path"/></div></li>
             <div>
               <li v-for="actor in cast" class="tvshow-actor-name">{{actor.name}}</li>
             </div>
@@ -54,6 +54,7 @@
       </div>
 
       <!-- Details of episodes and seasons -->
+      <div class="tvshow-season-div">
       <div @click="showEpisodesFn, showEpisodes = true" @mouseleave="showEpisodes = false" class="seasons-gradient">
         <div  class="tvshow-seasons-episodes">
           <ul>
@@ -68,10 +69,11 @@
           </ul>
         </div>
       </div>
+    </div>
       <div class="tvshow-episode-details">
         <div class="tvshow-episode-content">
           <div id="tvshow-episode-img">
-            <a href="route"><img v-if="saw" src="~assets/SawButton.png" id="tvshow-saw-btn"/></a>
+            <!-- <img @click="followEpisode()" v-if="saw" :src="followEpisodePath" id="tvshow-saw-btn"/>-->
             <img id="tvshow-episode-poster" :src="episodePoster"/>
           </div>
           <div id="tvshow-episode-text">
@@ -100,6 +102,7 @@ import Critics from '~components/Critics.vue'
 
 export default {
   data: () => ({
+    lang: 'en-US',
     img_path: 'https://image.tmdb.org/t/p/w500/',
     apiKey: '028097eda8e5dd43094c8fcbaf15a506',
     movie: {},
@@ -126,12 +129,33 @@ export default {
     query: '',
     searchBarShow: false,
     searchDone: false,
-    followPath: '/FollowButton.png'
+    followPath: '/FollowButton.png',
+    episodeId: '',
+    followEpisodePath: '/NotSeenButton.png'
   }),
   props: [
     'searchQuery'
   ],
   methods: {
+    followEpisode: function () {
+      this.followEpisodePath = '/SawButton.png'
+      axios({
+        method: 'put',
+        url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users/59300f38f36d2805427e6df7?apiKey=f-uDQagLij0gzft6G5473mVMsawV6Yy7',
+        data: {
+          '$push': {followedTvEpisodes: this.episodeId}
+        }
+      })
+    },
+    unFollowEpisode: function () {
+      axios({
+        method: 'put',
+        url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users/59300f38f36d2805427e6df7?apiKey=f-uDQagLij0gzft6G5473mVMsawV6Yy7',
+        data: {
+          '$remove': {followedTvEpisodes: this.episodeId}
+        }
+      })
+    },
     followShow: function () {
       this.followPath = '/FollowedButton.png'
       axios({
@@ -168,7 +192,7 @@ export default {
     setOverviewM: function (season, n) {
       console.log(season)
       console.log(n)
-      axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '/season/' + season.season_number + '?api_key=' + this.apiKey + '&language=en-US')
+      axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '/season/' + season.season_number + '?api_key=' + this.apiKey + '&language=' + this.lang)
       .then(response => {
         // JSON responses are automatically parsed.
         console.log(response.data)
@@ -177,13 +201,15 @@ export default {
         this.episodeName = response.data.episodes[n - 1].name
         this.episodeRunTime = response.data.episodes[n - 1].overview
         this.episodeReleasedDate = response.data.episodes[n - 1].air_date
+        this.episodeId = response.data.episodes[n - 1].id
+        console.log(this.episodeId)
       })
       .catch(e => {
         this.errors.push(e)
       })
     },
     setBio: function (actor) {
-      axios.get('https://api.themoviedb.org/3/person/' + actor.id + '?api_key=' + this.apiKey + '&language=en-US')
+      axios.get('https://api.themoviedb.org/3/person/' + actor.id + '?api_key=' + this.apiKey + '&language=' + this.lang)
       .then(response => {
         // JSON responses are automatically parsed.
         this.actorName = response.data.name
@@ -194,7 +220,7 @@ export default {
       })
     },
     searchEpisodes: function (index) {
-      axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '/season/' + index + '?api_key=' + this.apiKey + '&language=en-US')
+      axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '/season/' + index + '?api_key=' + this.apiKey + '&language=' + this.lang)
       .then(response => {
         // JSON responses are automatically parsed.
         this.seasonEpisodesNumber = response.data.episodes.length
@@ -211,7 +237,7 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '?api_key=' + this.apiKey + '&language=en-US')
+      axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '?api_key=' + this.apiKey + '&language=' + this.lang)
       .then(response => {
         // JSON responses are automatically parsed.
         this.movie = response.data
@@ -222,7 +248,7 @@ export default {
         this.errors.push(e)
       })
       // datas of the credits tvshow
-      axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '/credits?api_key=' + this.apiKey + '&language=en-US')
+      axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '/credits?api_key=' + this.apiKey + '&language=' + this.lang)
       .then(response => {
         // JSON responses are automatically parsed.
         this.cast = response.data.cast
@@ -233,7 +259,7 @@ export default {
       // datas of the tvshow seasons
       // for i=1  to this.seasons
       // apikey
-      axios.get('https://api.themoviedb.org/3/person/122616?api_key=' + this.apiKey + '&language=en-U')
+      axios.get('https://api.themoviedb.org/3/person/122616?api_key=' + this.apiKey + '&language=' + this.lang)
       .then(response => {
         // JSON responses are automatically parsed.
       })
@@ -254,7 +280,7 @@ export default {
       }console.log(response.data)
     })
     // datas of the global tvshow
-    axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '?api_key=' + this.apiKey + '&language=en-US')
+    axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '?api_key=' + this.apiKey + '&language=' + this.lang)
     .then(response => {
       // JSON responses are automatically parsed.
       this.movie = response.data
@@ -265,7 +291,7 @@ export default {
       this.errors.push(e)
     })
     // datas of the credits tvshow
-    axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '/credits?api_key=' + this.apiKey + '&language=en-US')
+    axios.get('https://api.themoviedb.org/3/tv/' + this.$route.params.id + '/credits?api_key=' + this.apiKey + '&language=' + this.lang)
     .then(response => {
       // JSON responses are automatically parsed.
       this.cast = response.data.cast
@@ -276,7 +302,7 @@ export default {
     // datas of the tvshow seasons
     // for i=1  to this.seasons
     // apikey
-    axios.get('https://api.themoviedb.org/3/person/122616?api_key=' + this.apiKey + '&language=en-U')
+    axios.get('https://api.themoviedb.org/3/person/122616?api_key=' + this.apiKey + '&language=' + this.lang)
     .then(response => {
       // JSON responses are automatically parsed.
     })
@@ -499,7 +525,7 @@ export default {
   }
 
   .seasons-gradient {
-    width: 35%;
+    width: 100%;
     background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.8) 0%, rgba(255, 255, 255, 0) 100%);
     position: relative;
     display: inline-block;
@@ -675,4 +701,12 @@ export default {
       vertical-align: super;
       margin-left: 5px;
     }
+    .tvshow-season-div {
+    height: 300px;
+    overflow-y: scroll;
+    white-space: pre-wrap;
+    width: 35%;
+    display: inline-block;
+    vertical-align: top;
+  }
 </style>

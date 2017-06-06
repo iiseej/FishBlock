@@ -16,7 +16,7 @@
       <button @click="nextPage"type="button" name="button" id="shows-next-btn"></button>
 
       <div class="shows-list-content" >
-        <p v-for="letter in alphabet" id="shows-list-text" >{{letter}}</p>
+        <!-- <p v-for="letter in alphabet" id="shows-list-text" >{{letter}}</p> -->
       </div>
 
       <!-- Posters of tvshows -->
@@ -129,7 +129,7 @@ export default {
   #space-top {
     height: 60px;
   }
-  
+
   #shows-previous-btn {
     width: 18px;
     height: 30px;
@@ -143,7 +143,7 @@ export default {
     margin-top: 40vh;
     margin-left: 20px;
   }
-  
+
   #shows-next-btn {
     width: 18px;
     height: 30px;
@@ -215,7 +215,7 @@ export default {
     text-align: center;
     color: #ff9941;
   }
-  
+
   #shows-posters-vote-img {
     width: 8px;
     margin-right: 5px;

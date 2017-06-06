@@ -8,8 +8,8 @@
 
     <!-- Photo and name -->
     <div class="profil-details">
-      <img src="~assets/profilPicture.jpg" alt="Profil Picture" class="rounded-picture"/>
-      <p id="profil-details-text">Update picture</p>
+      <img :src="picPath" alt="Profil Picture" class="rounded-picture"/>
+      <!---<p @click="userPicChange = !userPicChange" id="profil-details-text">Update picture</p>-->
       <div id="profil-details-elements">
         <img @click="userNameChange = !userNameChange " src="~assets/pen.png" alt="Update user informations" class="profil-details-update"/>
         <p id="profil-details-name" v-model="profilName"> {{profilName}},</p>
@@ -18,7 +18,7 @@
 
     </div>
     <div class="profil-details-write">
-      <p id="profil-details-write-text"><img src="~assets/writeTo.png" alt="Write to this user" id="profil-details-write-img"/>Write a message to user.pseudo</p>
+      <!--<p id="profil-details-write-text"><img src="~assets/writeTo.png" alt="Write to this user" id="profil-details-write-img"/>Write a message to {{profilName}}</p>-->
     </div>
 
     <!-- Recent activity -->
@@ -64,16 +64,17 @@
               <img @click="userNameChange = !userNameChange " src="~assets/updateClose.png" id="profil-update-form-icon"/>
               <p class="profil-update-form-text">new pseudo</p>
               <input type="text" name="" value="" placeholder="" id="profil-update-form-input" v-model="newNickname"/>
-              <button id="profil-update-form-btn" @click="setNewNickname(), userNameChange = !userNameChange">ok</button>
+              <button id="profil-update-form-btn" @click="changeNickname">change</button>
+              <button id="profil-update-form-btn" @click="updateNickname(), userNameChange = !userNameChange">ok</button>
             </div>
           </div>
-          <!-- update age -->
-          <div  v-if="userAgeChange" class="profil-update-content">
+          <!-- update picture -->
+          <div  v-if="userPicChange" class="profil-update-content">
             <div class="profil-update-form">
-              <img @click="userAgeChange = !userAgeChange " src="~assets/updateClose.png" id="profil-update-form-icon"/>
-              <p class="profil-update-form-text">new age</p>
-              <input type="text" name="" value="" placeholder="" id="profil-update-form-input"/>
-              <button id="profil-update-form-btn" @click="setNewAge(), userAgeChange = !userAgeChange">ok</button>
+              <img @click="userPicChange = !userPicChange " src="~assets/updateClose.png" id="profil-update-form-icon"/>
+              <p class="profil-update-form-text" > new url</p>
+              <input type="text" name="" value="" placeholder="" id="profil-update-form-input" v-model="newpic"/>
+              <button id="profil-update-form-btn" @click="changePic">ok</button>
             </div>
           </div>
     </div>
@@ -101,7 +102,11 @@
         userNameChange: false,
         profilName: '',
         newNickname: 'type here',
-        profilAge: ''
+        profilAge: '',
+        newpic: 'new url',
+        userPicChange: false,
+        picPath: '/profilPicture.jpg',
+        newPicPath: ''
       }
     },
     components: {
@@ -109,6 +114,15 @@
       searchBar
     },
     methods: {
+      changePic: function () {
+        axios({
+          method: 'put',
+          url: 'https://api.mlab.com/api/1/databases/fishblock/collections/Users?q={"name": "' + this.profilName + '"}&apiKey=' + this.apiKeyMongo,
+          data: {
+            '$set': {'img': this.newpic}
+          }
+        })
+      },
       setNewNickname: function () {
         this.changeNickname() + this.updateNickname()
       },
@@ -247,6 +261,7 @@
   #profil-details-text {
     text-align: center;
     margin-top: -20px;
+    cursor: pointer;
   }
 
   #profil-details-elements {
