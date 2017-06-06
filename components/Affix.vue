@@ -20,7 +20,7 @@
         <p id="night-mode"><img src="~assets/nightModeOn.png" alt="Night Mode Button" id="night-mode-on"/>Night Mode</p>
         <a href="route">
           <div id="btn-logout">
-            <p class="p-light">Logout</p>
+            <!-- <p class="p-light">Logout</p> -->
           </div>
         </a>
       </div>
@@ -188,12 +188,12 @@ li {
 }
 
 #nav-bar-ajust {
-  margin-bottom: 150px;
+  margin-bottom: 50px;
 }
 
 #nav-bar-middle {
-  margin-bottom: 50%;
-  margin-top: 50%;
+  margin-bottom: 20%;
+  margin-top: 80%;
 }
 
 #nav-bar-bottom {

@@ -9,7 +9,7 @@
     <!-- Photo and name -->
     <div class="profil-details">
       <img :src="picPath" alt="Profil Picture" class="rounded-picture"/>
-      <p @click="userPicChange = !userPicChange" id="profil-details-text">Update picture</p>
+      <!---<p @click="userPicChange = !userPicChange" id="profil-details-text">Update picture</p>-->
       <div id="profil-details-elements">
         <img @click="userNameChange = !userNameChange " src="~assets/pen.png" alt="Update user informations" class="profil-details-update"/>
         <p id="profil-details-name" v-model="profilName"> {{profilName}},</p>
@@ -18,7 +18,7 @@
 
     </div>
     <div class="profil-details-write">
-      <p id="profil-details-write-text"><img src="~assets/writeTo.png" alt="Write to this user" id="profil-details-write-img"/>Write a message to {{profilName}}</p>
+      <!--<p id="profil-details-write-text"><img src="~assets/writeTo.png" alt="Write to this user" id="profil-details-write-img"/>Write a message to {{profilName}}</p>-->
     </div>
 
     <!-- Recent activity -->
