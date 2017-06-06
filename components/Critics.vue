@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="tvshow-critics">
     <div id="tvshow-critics-text">
-      <img src="~assets/critics.png" id="tvshow-critics-icon"/> Critics
+      <img src="~assets/critics.png" id="tvshow-critics-icon"/> {{ $t('show.critics') }}
     </div>
     <div class="tvshow-critics-arrow">
       <button @click="prevCritic"type="button" name="button" id="shows-previous-btn"></button>
@@ -9,7 +9,7 @@
     <div class="tvshow-critics-element">
       <div>
         <p id="tvshow-critics-show-name">{{showName}}</p>
-        <p id="tvshow-critics-by">By</p>
+        <p id="tvshow-critics-by">{{ $t('show.by') }}</p>
         <a href="route">
           <p id="tvshow-critics-user-name">{{criticUser}}</p>
         </a>
@@ -44,7 +44,15 @@
         showName: '',
         showNote: '',
         critics: {},
-        index: 0
+        index: 0,
+        critics: 'Critics',
+        by: 'by'
+      }
+    },
+    head () {
+      return {
+        critics: this.$t('show.critics'),
+        by: this.$t('show.by')
       }
     },
     methods: {
@@ -52,6 +60,7 @@
       },
       prevCritic: function () {
         if (this.index === 0) {
+          console.log('no previous critics')
           return
         } this.index--
         axios({
@@ -66,6 +75,7 @@
         })
       },
       nextCritic: function () {
+        console.log('next critic')
         this.index++
         axios({
           method: 'get',

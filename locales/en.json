@@ -1,0 +1,40 @@
+{
+  "search" : {
+    "search_content" : "Search a show"
+  },
+
+  "links": {
+    "home" : "Home",
+    "profil": "Profil",
+    "shows": "Shows",
+    "messages": "Messages",
+    "settings": "Settings",
+    "nightmod" : "Night Mod",
+    "logout" : "Logout",
+    "french": "French traduction",
+    "english": "English tracudction"
+  },
+
+  "home": {
+    "lastCr" : "Last Critics",
+    "lastEp" : "Last episodes",
+    "comedy" : "Comedy",
+    "crime" : "Crime",
+    "western" : "Western",
+    "scifi" : "Sci-Fi",
+    "drama" : "Drama",
+    "lastsh" : "New shows releases"
+  },
+
+  "show": {
+    "seasons" : "seasons",
+    "season" : "season",
+    "episodes" : "episodes",
+    "lastEpAi" : "Last episode aired",
+    "aboutSh" : "About the show",
+    "followers" : "Followers",
+    "critics" : "Critics",
+    "cast": "The cast",
+    "by": "by"
+  }
+}
