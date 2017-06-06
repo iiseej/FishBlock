@@ -4,54 +4,62 @@
       <div id="nav-bar-middle">
         <img src="~assets/profilPicture.jpg" alt="Profil Picture" class="rounded-picture" />
         <ul>
-          <li   v-for="(item, index) in menu" @mouseover.stop="changePath(index)" @mouseleave.stop="changePathBack(index)":class="'nav-bar-selected'" >
+          <li  v-for="(item, index) in menu" @mouseover.stop="changePath(index)" @mouseleave.stop="changePathBack(index)":class="'nav-bar-selected'" >
             <div class="nav-bar-element">
               <img  style="height:20px;width:auto;" :src="item.path + item.name + 'Icon.png'" alt="">
-            <nuxt-link :to="'/'+item.name"><p>
-              <p class="nav-bar-text">{{item.name}}</p></nuxt-link>
-          </div>
-          </li>
-
-        </ul>
-      </div>
+              <nuxt-link :to="'/'+item.path_"><p>
+                <p class="nav-bar-text">{{item.name}}</p></nuxt-link>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
       <div id="nav-bar-bottom">
-       <img src="~assets/klausLogo.png" alt="Klaus Logo" class="logo"/>
-        <p id="night-mode"><img src="~assets/nightModeOn.png" alt="Night Mode Button" id="night-mode-on"/>Night Mode</p>
-        <a href="route">
+        <img src="~assets/klausLogo.png" alt="Klaus Logo" class="logo"/>
+        <p id="night-mode"><img src="~assets/nightModeOn.png" alt="Night Mode Button" id="night-mode-on"/>{{ $t('links.nightmod') }}</p>
+        <!-- <a href="route"> -->
           <div id="btn-logout">
-            <!-- <p class="p-light">Logout</p> -->
+            <traduction/>
           </div>
         </a>
       </div>
     </div>
-</template>
+  </template>
 
 <script>
+import traduction from '~components/traduction.vue'
+
 export default {
   data () {
     return {
       menu: [{
-        name: 'Home',
-        path: '/orangeIcons/'
+        name: this.$t('links.home'),
+        path: '/orangeIcons/',
+        path_: 'Home'
       },
       {
-        name: 'Profil',
-        path: '/orangeIcons/'
+        name: this.$t('links.profil'),
+        path: '/orangeIcons/',
+        path_: 'profil'
       },
       {
-        name: 'Shows',
-        path: '/orangeIcons/'
+        name: this.$t('links.shows'),
+        path: '/orangeIcons/',
+        path_: 'shows'
       }
       // {
-      //   name: 'Messages',
-      //   path: '/orangeIcons/'
+      //   name: this.$t('links.messages'),
+      //   path: '/orangeIcons/',
+      //   path_: 'messages'
       // },
       // {
-      //   name: 'Settings',
-      //   path: '/orangeIcons/'
+      //   name: this.$t('links.settings'),
+      //   path: '/orangeIcons/',
+      //   path_: 'settings'
       // }
-      ]
+    ],
+    nightmod : 'Night Mode',
+    logout : 'Logout'
     }
   },
   methods: {
@@ -60,6 +68,15 @@ export default {
     },
     changePathBack: function (index) {
       this.menu[index].path = '/orangeIcons/'
+    }
+  },
+  components: {
+    traduction
+  },
+  head () {
+    return {
+      nightmod: this.$t('links.nightmod'),
+      logout: this.$t('links.logout')
     }
   }
 }
@@ -110,6 +127,12 @@ li {
   padding-bottom: 10px;
   padding-left: 45px;
 }
+
+h1{
+  color:red;
+}
+
+
 
 #nav-bar {
   width: 220px;
@@ -250,6 +273,14 @@ li {
 #btn-logout:hover .p-light{
   color: black;
   font-weight: 800;
+}
+
+
+#content {
+  flex: 1 1 auto;
+  background-color: #262835;
+  height: 2000px;
+  margin-left: 220px
 }
 
 </style>

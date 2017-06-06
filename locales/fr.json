@@ -1,0 +1,41 @@
+{
+  "search" : {
+    "search_content" : "Cherche une série"
+  },
+
+  "links" : {
+    "home" : "Accueil",
+    "profil": "Profil",
+    "shows": "Séries",
+    "messages": "Messages",
+    "settings": "Réglages",
+    "nightmod" : "Mode Nuit",
+    "logout" : "Se déconnecter",
+    "french" : "traduction française",
+    "english" : "traduction anglaise"
+  },
+
+
+  "home": {
+    "lastEp" : "Derniers épisodes",
+    "lastCr" : "Dernieres critiques",
+    "comedy" : "Comédie",
+    "crime" : "Crime",
+    "western" : "Western",
+    "scifi" : "Sci-Fi",
+    "drama" : "Dramatique",
+    "lastsh" : "Nouvelles série sorties"
+  },
+
+  "show": {
+    "seasons" : "saisons",
+    "season" : "saison",
+    "episodes" : "épisodes",
+    "lastEpAi" : "Dernier épisode diffusé le",
+    "aboutSh" : "A propos de la série",
+    "followers" : "Followers",
+    "critics" : "Critiques",
+    "cast" : "Casting",
+    "by": "par"
+  }
+}
